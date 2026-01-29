@@ -1,7 +1,15 @@
+# macOS
 .DS_Store
-*.o
-*.out
-a.out
-build/
-cmake-build-*/
-*.exe
+
+# Python virtual environment
+.venv/
+
+# VS Code
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log
