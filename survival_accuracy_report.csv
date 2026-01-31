@@ -1,0 +1,262 @@
+season,week,n_to_eliminate,actual_eliminated,predicted_eliminated,prediction_status,correct_count,total_eliminated_actual,actual_eliminated_list,predicted_eliminated_list,roster_size,actual_survivors_count,predicted_survivors_count,intersection_count,survival_accuracy
+1,2,1,Trista Sutter,Trista Sutter,1/1,1,1,['Trista Sutter'],['Trista Sutter'],6,5,5,5,1.0
+1,3,1,Evander Holyfield,Evander Holyfield,1/1,1,1,['Evander Holyfield'],['Evander Holyfield'],5,4,4,4,1.0
+1,4,1,Rachel Hunter,Rachel Hunter,1/1,1,1,['Rachel Hunter'],['Rachel Hunter'],4,3,3,3,1.0
+1,5,1,Joey McIntyre,Kelly Monaco,0/1,0,1,['Joey McIntyre'],['Kelly Monaco'],3,2,2,1,0.5
+2,1,1,Kenny Mayne,Kenny Mayne,1/1,1,1,['Kenny Mayne'],['Kenny Mayne'],10,9,9,9,1.0
+2,2,1,Tatum O'Neal,Tatum O'Neal,1/1,1,1,"[""Tatum O'Neal""]","[""Tatum O'Neal""]",9,8,8,8,1.0
+2,3,1,Giselle Fernandez,Giselle Fernandez,1/1,1,1,['Giselle Fernandez'],['Giselle Fernandez'],8,7,7,7,1.0
+2,4,1,Master P,Master P,1/1,1,1,['Master P'],['Master P'],7,6,6,6,1.0
+2,5,1,Tia Carrere,Tia Carrere,1/1,1,1,['Tia Carrere'],['Tia Carrere'],6,5,5,5,1.0
+2,6,1,George Hamilton,George Hamilton,1/1,1,1,['George Hamilton'],['George Hamilton'],5,4,4,4,1.0
+2,7,1,Lisa Rinna,Lisa Rinna,1/1,1,1,['Lisa Rinna'],['Lisa Rinna'],4,3,3,3,1.0
+3,1,1,Tucker Carlson,Tucker Carlson,1/1,1,1,['Tucker Carlson'],['Tucker Carlson'],11,10,10,10,1.0
+3,2,1,Shanna Moakler,Jerry Springer,0/1,0,1,['Shanna Moakler'],['Jerry Springer'],10,9,9,8,0.8888888888888888
+3,3,1,Harry Hamlin,Emmitt Smith,0/1,0,1,['Harry Hamlin'],['Emmitt Smith'],9,8,8,7,0.875
+3,4,1,Vivica A. Fox,Sara Evans,0/1,0,1,['Vivica A. Fox'],['Sara Evans'],8,7,7,6,0.8571428571428571
+3,5,2,"Sara Evans, Willa Ford","Jerry Springer, Sara Evans",1/2,1,2,"['Sara Evans', 'Willa Ford']","['Jerry Springer', 'Sara Evans']",7,5,5,4,0.8
+3,7,1,Jerry Springer,Jerry Springer,1/1,1,1,['Jerry Springer'],['Jerry Springer'],5,4,4,4,1.0
+3,8,1,Monique Coleman,Monique Coleman,1/1,1,1,['Monique Coleman'],['Monique Coleman'],4,3,3,3,1.0
+3,9,1,Joey Lawrence,Mario Lopez,0/1,0,1,['Joey Lawrence'],['Mario Lopez'],3,2,2,1,0.5
+4,2,1,Paulina Porizkova,Clyde Drexler,0/1,0,1,['Paulina Porizkova'],['Clyde Drexler'],11,10,10,9,0.9
+4,3,1,Shandi Finnessey,Clyde Drexler,0/1,0,1,['Shandi Finnessey'],['Clyde Drexler'],10,9,9,8,0.8888888888888888
+4,4,1,Leeza Gibbons,Clyde Drexler,0/1,0,1,['Leeza Gibbons'],['Clyde Drexler'],9,8,8,7,0.875
+4,5,1,Clyde Drexler,Clyde Drexler,1/1,1,1,['Clyde Drexler'],['Clyde Drexler'],8,7,7,7,1.0
+4,6,1,Heather Mills,John Ratzenberger,0/1,0,1,['Heather Mills'],['John Ratzenberger'],7,6,6,5,0.8333333333333334
+4,7,1,John Ratzenberger,Billy Ray Cyrus,0/1,0,1,['John Ratzenberger'],['Billy Ray Cyrus'],6,5,5,4,0.8
+4,8,1,Billy Ray Cyrus,Billy Ray Cyrus,1/1,1,1,['Billy Ray Cyrus'],['Billy Ray Cyrus'],5,4,4,4,1.0
+4,9,1,Ian Ziering,Ian Ziering,1/1,1,1,['Ian Ziering'],['Ian Ziering'],4,3,3,3,1.0
+5,1,1,Josie Maran,Josie Maran,1/1,1,1,['Josie Maran'],['Josie Maran'],12,11,11,11,1.0
+5,2,1,Albert Reed,Wayne Newton,0/1,0,1,['Albert Reed'],['Wayne Newton'],11,10,10,9,0.9
+5,3,1,Wayne Newton,Wayne Newton,1/1,1,1,['Wayne Newton'],['Wayne Newton'],10,9,9,9,1.0
+5,4,1,Floyd Mayweather Jr.,Mark Cuban,0/1,0,1,['Floyd Mayweather Jr.'],['Mark Cuban'],9,8,8,7,0.875
+5,5,1,Mark Cuban,Mark Cuban,1/1,1,1,['Mark Cuban'],['Mark Cuban'],8,7,7,7,1.0
+5,6,1,Sabrina Bryan,Jane Seymour,0/1,0,1,['Sabrina Bryan'],['Jane Seymour'],7,6,6,5,0.8333333333333334
+5,7,1,Jane Seymour,Jane Seymour,1/1,1,1,['Jane Seymour'],['Jane Seymour'],6,5,5,5,1.0
+5,8,1,Cameron Mathison,Cameron Mathison,1/1,1,1,['Cameron Mathison'],['Cameron Mathison'],5,4,4,4,1.0
+5,9,1,Jennie Garth,Marie Osmond,0/1,0,1,['Jennie Garth'],['Marie Osmond'],4,3,3,2,0.6666666666666666
+6,2,2,"Monica Seles, Penn Jillette","Monica Seles, Steve Guttenberg",1/2,1,2,"['Monica Seles', 'Penn Jillette']","['Monica Seles', 'Steve Guttenberg']",12,10,10,9,0.9
+6,3,1,Steve Guttenberg,Marissa Jaret Winokur,0/1,0,1,['Steve Guttenberg'],['Marissa Jaret Winokur'],10,9,9,8,0.8888888888888888
+6,4,1,Adam Carolla,Adam Carolla,1/1,1,1,['Adam Carolla'],['Adam Carolla'],9,8,8,8,1.0
+6,5,1,Priscilla Presley,Priscilla Presley,1/1,1,1,['Priscilla Presley'],['Priscilla Presley'],8,7,7,7,1.0
+6,6,1,Marlee Matlin,Marlee Matlin,1/1,1,1,['Marlee Matlin'],['Marlee Matlin'],7,6,6,6,1.0
+6,7,1,Shannon Elizabeth,Cristian de la Fuente,0/1,0,1,['Shannon Elizabeth'],['Cristian de la Fuente'],6,5,5,4,0.8
+6,8,1,Mario,Marissa Jaret Winokur,0/1,0,1,['Mario'],['Marissa Jaret Winokur'],5,4,4,3,0.75
+6,9,1,Marissa Jaret Winokur,Marissa Jaret Winokur,1/1,1,1,['Marissa Jaret Winokur'],['Marissa Jaret Winokur'],4,3,3,3,1.0
+7,1,2,"Jeffrey Ross, Ted McGinley","Jeffrey Ross, Cloris Leachman",1/2,1,2,"['Jeffrey Ross', 'Ted McGinley']","['Jeffrey Ross', 'Cloris Leachman']",13,11,11,10,0.9090909090909091
+7,2,2,"Kim Kardashian, Misty May-Treanor","Cloris Leachman, Rocco DiSpirito",0/2,0,2,"['Kim Kardashian', 'Misty May-Treanor']","['Cloris Leachman', 'Rocco DiSpirito']",11,9,9,7,0.7777777777777778
+7,4,1,Rocco DiSpirito,Rocco DiSpirito,1/1,1,1,['Rocco DiSpirito'],['Rocco DiSpirito'],9,8,8,8,1.0
+7,5,1,Toni Braxton,Cloris Leachman,0/1,0,1,['Toni Braxton'],['Cloris Leachman'],8,7,7,6,0.8571428571428571
+7,6,1,Cloris Leachman,Cloris Leachman,1/1,1,1,['Cloris Leachman'],['Cloris Leachman'],7,6,6,6,1.0
+7,7,1,Susan Lucci,Cody Linley,0/1,0,1,['Susan Lucci'],['Cody Linley'],6,5,5,4,0.8
+7,8,1,Maurice Greene,Maurice Greene,1/1,1,1,['Maurice Greene'],['Maurice Greene'],5,4,4,4,1.0
+7,9,1,Cody Linley,Cody Linley,1/1,1,1,['Cody Linley'],['Cody Linley'],4,3,3,3,1.0
+8,2,1,Belinda Carlisle,Steve-O,0/1,0,1,['Belinda Carlisle'],['Steve-O'],13,12,12,11,0.9166666666666666
+8,3,1,Denise Richards,Steve Wozniak,0/1,0,1,['Denise Richards'],['Steve Wozniak'],12,11,11,10,0.9090909090909091
+8,4,2,"Steve Wozniak, Holly Madison","Steve Wozniak, Steve-O",1/2,1,2,"['Steve Wozniak', 'Holly Madison']","['Steve Wozniak', 'Steve-O']",11,9,9,8,0.8888888888888888
+8,5,1,David Alan Grier,Steve-O,0/1,0,1,['David Alan Grier'],['Steve-O'],9,8,8,7,0.875
+8,6,1,Steve-O,Steve-O,1/1,1,1,['Steve-O'],['Steve-O'],8,7,7,7,1.0
+8,7,1,Lawrence Taylor,Lawrence Taylor,1/1,1,1,['Lawrence Taylor'],['Lawrence Taylor'],7,6,6,6,1.0
+8,8,1,Chuck Wicks,Melissa Rycroft,0/1,0,1,['Chuck Wicks'],['Melissa Rycroft'],6,5,5,4,0.8
+8,9,1,Lil' Kim,Ty Murray,0/1,0,1,"[""Lil' Kim""]",['Ty Murray'],5,4,4,3,0.75
+8,10,1,Ty Murray,Ty Murray,1/1,1,1,['Ty Murray'],['Ty Murray'],4,3,3,3,1.0
+9,1,2,"Ashley Hamiliton, Macy Gray","Ashley Hamiliton, Macy Gray",2/2,2,2,"['Ashley Hamiliton', 'Macy Gray']","['Ashley Hamiliton', 'Macy Gray']",16,14,14,14,1.0
+9,2,1,Kathy Ireland,Tom DeLay,0/1,0,1,['Kathy Ireland'],['Tom DeLay'],14,13,13,12,0.9230769230769231
+9,3,2,"Tom DeLay, Debi Mazar","Michael Irvin, Tom DeLay",1/2,1,2,"['Tom DeLay', 'Debi Mazar']","['Michael Irvin', 'Tom DeLay']",13,11,11,10,0.9090909090909091
+9,4,1,Chuck Liddell,Louie Vito,0/1,0,1,['Chuck Liddell'],['Louie Vito'],11,10,10,9,0.9
+9,5,1,Natalie Coughlin,Michael Irvin,0/1,0,1,['Natalie Coughlin'],['Michael Irvin'],10,9,9,8,0.8888888888888888
+9,6,2,"Melissa Joan Hart, Louie Vito","Michael Irvin, Melissa Joan Hart",1/2,1,2,"['Melissa Joan Hart', 'Louie Vito']","['Michael Irvin', 'Melissa Joan Hart']",9,7,7,6,0.8571428571428571
+9,7,2,"Mark Dacascos, Michael Irvin","Mark Dacascos, Michael Irvin",2/2,2,2,"['Mark Dacascos', 'Michael Irvin']","['Mark Dacascos', 'Michael Irvin']",7,5,5,5,1.0
+9,8,1,Aaron Carter,Aaron Carter,1/1,1,1,['Aaron Carter'],['Aaron Carter'],5,4,4,4,1.0
+9,9,1,Joanna Krupa,Donny Osmond,0/1,0,1,['Joanna Krupa'],['Donny Osmond'],4,3,3,2,0.6666666666666666
+10,2,1,Shannen Doherty,Buzz Aldrin,0/1,0,1,['Shannen Doherty'],['Buzz Aldrin'],11,10,10,9,0.9
+10,3,1,Buzz Aldrin,Buzz Aldrin,1/1,1,1,['Buzz Aldrin'],['Buzz Aldrin'],10,9,9,9,1.0
+10,4,1,Aiden Turner,Kate Gosselin,0/1,0,1,['Aiden Turner'],['Kate Gosselin'],9,8,8,7,0.875
+10,5,1,Kate Gosselin,Kate Gosselin,1/1,1,1,['Kate Gosselin'],['Kate Gosselin'],8,7,7,7,1.0
+10,6,1,Jake Pavelka,Jake Pavelka,1/1,1,1,['Jake Pavelka'],['Jake Pavelka'],7,6,6,6,1.0
+10,7,1,Pamela Anderson,Niecy Nash,0/1,0,1,['Pamela Anderson'],['Niecy Nash'],6,5,5,4,0.8
+10,8,1,Niecy Nash,Niecy Nash,1/1,1,1,['Niecy Nash'],['Niecy Nash'],5,4,4,4,1.0
+10,9,1,Chad Ochocinco,Chad Ochocinco,1/1,1,1,['Chad Ochocinco'],['Chad Ochocinco'],4,3,3,3,1.0
+11,1,1,David Hasselhoff,David Hasselhoff,1/1,1,1,['David Hasselhoff'],['David Hasselhoff'],12,11,11,11,1.0
+11,2,1,Michael Bolton,Michael Bolton,1/1,1,1,['Michael Bolton'],['Michael Bolton'],11,10,10,10,1.0
+11,3,1,Margaret Cho,Margaret Cho,1/1,1,1,['Margaret Cho'],['Margaret Cho'],10,9,9,9,1.0
+11,4,1,The Situation,The Situation,1/1,1,1,['The Situation'],['The Situation'],9,8,8,8,1.0
+11,5,1,Florence Henderson,Bristol Palin,0/1,0,1,['Florence Henderson'],['Bristol Palin'],8,7,7,6,0.8571428571428571
+11,6,1,Audrina Patridge,Kurt Warner,0/1,0,1,['Audrina Patridge'],['Kurt Warner'],7,6,6,5,0.8333333333333334
+11,7,1,Rick Fox,Rick Fox,1/1,1,1,['Rick Fox'],['Rick Fox'],6,5,5,5,1.0
+11,8,1,Kurt Warner,Kurt Warner,1/1,1,1,['Kurt Warner'],['Kurt Warner'],5,4,4,4,1.0
+11,9,1,Brandy,Brandy,1/1,1,1,['Brandy'],['Brandy'],4,3,3,3,1.0
+12,2,1,Mike Catherwood,Mike Catherwood,1/1,1,1,['Mike Catherwood'],['Mike Catherwood'],11,10,10,10,1.0
+12,3,1,Wendy Williams,Wendy Williams,1/1,1,1,['Wendy Williams'],['Wendy Williams'],10,9,9,9,1.0
+12,4,1,Sugar Ray Leonard,Kendra Wilkinson,0/1,0,1,['Sugar Ray Leonard'],['Kendra Wilkinson'],9,8,8,7,0.875
+12,5,1,Petra Nemcova,Petra Nemcova,1/1,1,1,['Petra Nemcova'],['Petra Nemcova'],8,7,7,7,1.0
+12,6,1,Chris Jericho,Chris Jericho,1/1,1,1,['Chris Jericho'],['Chris Jericho'],7,6,6,6,1.0
+12,7,1,Kendra Wilkinson,Romeo,0/1,0,1,['Kendra Wilkinson'],['Romeo'],6,5,5,4,0.8
+12,8,1,Romeo,Ralph Macchio,0/1,0,1,['Romeo'],['Ralph Macchio'],5,4,4,3,0.75
+12,9,1,Ralph Macchio,Ralph Macchio,1/1,1,1,['Ralph Macchio'],['Ralph Macchio'],4,3,3,3,1.0
+13,1,1,Metta World Peace (Ron),Metta World Peace (Ron),1/1,1,1,['Metta World Peace (Ron)'],['Metta World Peace (Ron)'],12,11,11,11,1.0
+13,2,1,Elisabetta Canalis,Chaz Bono,0/1,0,1,['Elisabetta Canalis'],['Chaz Bono'],11,10,10,9,0.9
+13,3,1,Kristin Cavallari,Chaz Bono,0/1,0,1,['Kristin Cavallari'],['Chaz Bono'],10,9,9,8,0.8888888888888888
+13,4,1,Chynna Phillips,Carson Kressley,0/1,0,1,['Chynna Phillips'],['Carson Kressley'],9,8,8,7,0.875
+13,5,1,Carson Kressley,Carson Kressley,1/1,1,1,['Carson Kressley'],['Carson Kressley'],8,7,7,7,1.0
+13,6,1,Chaz Bono,Chaz Bono,1/1,1,1,['Chaz Bono'],['Chaz Bono'],7,6,6,6,1.0
+13,7,1,David Arquette,Nancy Grace,0/1,0,1,['David Arquette'],['Nancy Grace'],6,5,5,4,0.8
+13,8,1,Nancy Grace,Nancy Grace,1/1,1,1,['Nancy Grace'],['Nancy Grace'],5,4,4,4,1.0
+13,9,1,Hope Solo,Hope Solo,1/1,1,1,['Hope Solo'],['Hope Solo'],4,3,3,3,1.0
+14,2,1,Martina Navratilova,Martina Navratilova,1/1,1,1,['Martina Navratilova'],['Martina Navratilova'],12,11,11,11,1.0
+14,3,1,Jack Wagner,Gavin DeGraw,0/1,0,1,['Jack Wagner'],['Gavin DeGraw'],11,10,10,9,0.9
+14,4,1,Sherri Sheperd,Gladys Knight,0/1,0,1,['Sherri Sheperd'],['Gladys Knight'],10,9,9,8,0.8888888888888888
+14,5,1,Gavin DeGraw,Gavin DeGraw,1/1,1,1,['Gavin DeGraw'],['Gavin DeGraw'],9,8,8,8,1.0
+14,6,1,Gladys Knight,Gladys Knight,1/1,1,1,['Gladys Knight'],['Gladys Knight'],8,7,7,7,1.0
+14,7,1,Jaleel White,Melissa Gilbert,0/1,0,1,['Jaleel White'],['Melissa Gilbert'],7,6,6,5,0.8333333333333334
+14,8,2,"Melissa Gilbert, Roshon Fegan","Melissa Gilbert, Maria Menounos",1/2,1,2,"['Melissa Gilbert', 'Roshon Fegan']","['Melissa Gilbert', 'Maria Menounos']",6,4,4,3,0.75
+14,9,1,Maria Menounos,Katherine Jenkins,0/1,0,1,['Maria Menounos'],['Katherine Jenkins'],4,3,3,2,0.6666666666666666
+15,1,1,Pamela Anderson,Pamela Anderson,1/1,1,1,['Pamela Anderson'],['Pamela Anderson'],13,12,12,12,1.0
+15,2,1,Joey Fatone,Bristol Palin,0/1,0,1,['Joey Fatone'],['Bristol Palin'],12,11,11,10,0.9090909090909091
+15,3,2,"Drew Lachey, Helio Castroneves","Bristol Palin, Drew Lachey",1/2,1,2,"['Drew Lachey', 'Helio Castroneves']","['Bristol Palin', 'Drew Lachey']",11,9,9,8,0.8888888888888888
+15,4,1,Bristol Palin,Kirstie Alley,0/1,0,1,['Bristol Palin'],['Kirstie Alley'],9,8,8,7,0.875
+15,6,1,Sabrina Bryan,Emmitt Smith,0/1,0,1,['Sabrina Bryan'],['Emmitt Smith'],8,7,7,6,0.8571428571428571
+15,8,2,"Kirstie Alley, Gilles Marini","Kirstie Alley, Shawn Johnson",1/2,1,2,"['Kirstie Alley', 'Gilles Marini']","['Kirstie Alley', 'Shawn Johnson']",7,5,5,4,0.8
+15,9,2,"Emmitt Smith, Apolo Anton Ohno","Emmitt Smith, Kelly Monaco",1/2,1,2,"['Emmitt Smith', 'Apolo Anton Ohno']","['Emmitt Smith', 'Kelly Monaco']",5,3,3,2,0.6666666666666666
+16,2,1,Dorothy Hamill,Dorothy Hamill,1/1,1,1,['Dorothy Hamill'],['Dorothy Hamill'],12,11,11,11,1.0
+16,3,1,Wynonna Judd,Wynonna Judd,1/1,1,1,['Wynonna Judd'],['Wynonna Judd'],11,10,10,10,1.0
+16,4,1,Lisa Vanderpump,Victor Ortiz,0/1,0,1,['Lisa Vanderpump'],['Victor Ortiz'],10,9,9,8,0.8888888888888888
+16,5,1,D. L. Hughley,D. L. Hughley,1/1,1,1,['D. L. Hughley'],['D. L. Hughley'],9,8,8,8,1.0
+16,6,1,Victor Ortiz,Victor Ortiz,1/1,1,1,['Victor Ortiz'],['Victor Ortiz'],8,7,7,7,1.0
+16,7,1,Andy Dick,Andy Dick,1/1,1,1,['Andy Dick'],['Andy Dick'],7,6,6,6,1.0
+16,8,1,Sean Lowe,Sean Lowe,1/1,1,1,['Sean Lowe'],['Sean Lowe'],6,5,5,5,1.0
+16,9,1,Ingo Rademacher,Ingo Rademacher,1/1,1,1,['Ingo Rademacher'],['Ingo Rademacher'],5,4,4,4,1.0
+17,2,1,Keyshawn Johnson,Bill Nye,0/1,0,1,['Keyshawn Johnson'],['Bill Nye'],12,11,11,10,0.9090909090909091
+17,3,1,Bill Nye,Bill Nye,1/1,1,1,['Bill Nye'],['Bill Nye'],11,10,10,10,1.0
+17,4,1,Valerie Harper,Valerie Harper,1/1,1,1,['Valerie Harper'],['Valerie Harper'],10,9,9,9,1.0
+17,5,1,Christina Milian,Leah Remini,0/1,0,1,['Christina Milian'],['Leah Remini'],9,8,8,7,0.875
+17,7,1,"Nicole ""Snooki"" Polizzi",Bill Engvall,0/1,0,1,"['Nicole ""Snooki"" Polizzi']",['Bill Engvall'],8,7,7,6,0.8571428571428571
+17,8,1,Brant Daugherty,Elizabeth Berkley Lauren,0/1,0,1,['Brant Daugherty'],['Elizabeth Berkley Lauren'],7,6,6,5,0.8333333333333334
+17,9,1,Elizabeth Berkley Lauren,Bill Engvall,0/1,0,1,['Elizabeth Berkley Lauren'],['Bill Engvall'],6,5,5,4,0.8
+17,10,1,Leah Remini,Bill Engvall,0/1,0,1,['Leah Remini'],['Bill Engvall'],5,4,4,3,0.75
+18,1,1,Diana Nyad,Billy Dee Williams,0/1,0,1,['Diana Nyad'],['Billy Dee Williams'],12,11,11,10,0.9090909090909091
+18,2,2,"Billy Dee Williams, Sean Avery","Billy Dee Williams, Sean Avery",2/2,2,2,"['Billy Dee Williams', 'Sean Avery']","['Billy Dee Williams', 'Sean Avery']",11,9,9,9,1.0
+18,5,1,Cody Simpson,Drew Carey,0/1,0,1,['Cody Simpson'],['Drew Carey'],9,8,8,7,0.875
+18,6,1,Drew Carey,Drew Carey,1/1,1,1,['Drew Carey'],['Drew Carey'],8,7,7,7,1.0
+18,7,1,NeNe Leakes,NeNe Leakes,1/1,1,1,['NeNe Leakes'],['NeNe Leakes'],7,6,6,6,1.0
+18,8,1,Danica McKellar,James Maslow,0/1,0,1,['Danica McKellar'],['James Maslow'],6,5,5,4,0.8
+18,9,1,Charlie White,Charlie White,1/1,1,1,['Charlie White'],['Charlie White'],5,4,4,4,1.0
+19,1,1,Lolo Jones,Betsey Johnson,0/1,0,1,['Lolo Jones'],['Betsey Johnson'],13,12,12,11,0.9166666666666666
+19,2,1,Tavis Smiley,Michael Waltrip,0/1,0,1,['Tavis Smiley'],['Michael Waltrip'],12,11,11,10,0.9090909090909091
+19,3,1,Randy Couture,Randy Couture,1/1,1,1,['Randy Couture'],['Randy Couture'],11,10,10,10,1.0
+19,4,1,Betsey Johnson,Jonathan Bennett,0/1,0,1,['Betsey Johnson'],['Jonathan Bennett'],10,9,9,8,0.8888888888888888
+19,6,1,Jonathan Bennett,Antonio Sabato Jr.,0/1,0,1,['Jonathan Bennett'],['Antonio Sabato Jr.'],9,8,8,7,0.875
+19,7,1,Antonio Sabato Jr.,Michael Waltrip,0/1,0,1,['Antonio Sabato Jr.'],['Michael Waltrip'],8,7,7,6,0.8571428571428571
+19,8,1,Michael Waltrip,Michael Waltrip,1/1,1,1,['Michael Waltrip'],['Michael Waltrip'],7,6,6,6,1.0
+19,9,1,Lea Thompson,Tommy Chong,0/1,0,1,['Lea Thompson'],['Tommy Chong'],6,5,5,4,0.8
+19,10,1,Tommy Chong,Tommy Chong,1/1,1,1,['Tommy Chong'],['Tommy Chong'],5,4,4,4,1.0
+20,2,1,Redfoo,Chris Soules,0/1,0,1,['Redfoo'],['Chris Soules'],12,11,11,10,0.9090909090909091
+20,3,1,Charlotte McKinney,Charlotte McKinney,1/1,1,1,['Charlotte McKinney'],['Charlotte McKinney'],11,10,10,10,1.0
+20,4,1,Michael Sam,Chris Soules,0/1,0,1,['Michael Sam'],['Chris Soules'],10,9,9,8,0.8888888888888888
+20,5,1,Suzanne Somers,Robert Herjavec,0/1,0,1,['Suzanne Somers'],['Robert Herjavec'],9,8,8,7,0.875
+20,6,1,Patti LaBelle,Patti LaBelle,1/1,1,1,['Patti LaBelle'],['Patti LaBelle'],8,7,7,7,1.0
+20,7,1,Willow Shields,Chris Soules,0/1,0,1,['Willow Shields'],['Chris Soules'],7,6,6,5,0.8333333333333334
+20,8,2,"Robert Herjavec, Chris Soules","Robert Herjavec, Chris Soules",2/2,2,2,"['Robert Herjavec', 'Chris Soules']","['Robert Herjavec', 'Chris Soules']",6,4,4,4,1.0
+20,9,1,Nastia Liukin,Noah Galloway,0/1,0,1,['Nastia Liukin'],['Noah Galloway'],4,3,3,2,0.6666666666666666
+21,2,3,"Chaka Khan, Kim Zolciak-Biermann, Victor Espinoza","Chaka Khan, Gary Busey, Paula Deen",1/3,1,3,"['Chaka Khan', 'Kim Zolciak-Biermann', 'Victor Espinoza']","['Chaka Khan', 'Gary Busey', 'Paula Deen']",13,10,10,8,0.8
+21,4,1,Gary Busey,Gary Busey,1/1,1,1,['Gary Busey'],['Gary Busey'],10,9,9,9,1.0
+21,6,1,Paula Deen,Paula Deen,1/1,1,1,['Paula Deen'],['Paula Deen'],9,8,8,8,1.0
+21,7,1,Hayes Grier,Tamar Braxton,0/1,0,1,['Hayes Grier'],['Tamar Braxton'],8,7,7,6,0.8571428571428571
+21,8,1,Andy Grammer,Andy Grammer,1/1,1,1,['Andy Grammer'],['Andy Grammer'],7,6,6,6,1.0
+21,9,2,"Tamar Braxton, Alexa PenaVega","Tamar Braxton, Carlos PenaVega",1/2,1,2,"['Tamar Braxton', 'Alexa PenaVega']","['Tamar Braxton', 'Carlos PenaVega']",6,4,4,3,0.75
+22,2,1,Geraldo Rivera,Geraldo Rivera,1/1,1,1,['Geraldo Rivera'],['Geraldo Rivera'],12,11,11,11,1.0
+22,3,1,Mischa Barton,Mischa Barton,1/1,1,1,['Mischa Barton'],['Mischa Barton'],11,10,10,10,1.0
+22,4,1,Marla Maples,Doug Flutie,0/1,0,1,['Marla Maples'],['Doug Flutie'],10,9,9,8,0.8888888888888888
+22,6,1,Doug Flutie,Doug Flutie,1/1,1,1,['Doug Flutie'],['Doug Flutie'],9,8,8,8,1.0
+22,7,2,"Von Miller, Kim Fields","Jodie Sweetin, Von Miller",1/2,1,2,"['Von Miller', 'Kim Fields']","['Jodie Sweetin', 'Von Miller']",8,6,6,5,0.8333333333333334
+22,8,1,Jodie Sweetin,Wanya Morris,0/1,0,1,['Jodie Sweetin'],['Wanya Morris'],6,5,5,4,0.8
+22,9,2,"Antonio Brown, Wanya Morris","Antonio Brown, Ginger Zee",1/2,1,2,"['Antonio Brown', 'Wanya Morris']","['Antonio Brown', 'Ginger Zee']",5,3,3,2,0.6666666666666666
+23,2,1,Jake T. Austin,Rick Perry,0/1,0,1,['Jake T. Austin'],['Rick Perry'],13,12,12,11,0.9166666666666666
+23,3,1,Rick Perry,Vanilla Ice,0/1,0,1,['Rick Perry'],['Vanilla Ice'],12,11,11,10,0.9090909090909091
+23,4,2,"Babyface, Vanilla Ice","Babyface, Ryan Lochte",1/2,1,2,"['Babyface', 'Vanilla Ice']","['Babyface', 'Ryan Lochte']",11,9,9,8,0.8888888888888888
+23,6,1,Amber Rose,Amber Rose,1/1,1,1,['Amber Rose'],['Amber Rose'],9,8,8,8,1.0
+23,7,1,Maureen McCormick,Ryan Lochte,0/1,0,1,['Maureen McCormick'],['Ryan Lochte'],8,7,7,6,0.8571428571428571
+23,8,1,Ryan Lochte,Terra Jole,0/1,0,1,['Ryan Lochte'],['Terra Jole'],7,6,6,5,0.8333333333333334
+23,9,1,Marilu Henner,Marilu Henner,1/1,1,1,['Marilu Henner'],['Marilu Henner'],6,5,5,5,1.0
+23,10,1,Terra Jole,Calvin Johnson Jr.,0/1,0,1,['Terra Jole'],['Calvin Johnson Jr.'],5,4,4,3,0.75
+24,2,1,Chris Kattan,Chris Kattan,1/1,1,1,['Chris Kattan'],['Chris Kattan'],12,11,11,11,1.0
+24,3,1,Charo,Charo,1/1,1,1,['Charo'],['Charo'],11,10,10,10,1.0
+24,4,1,Mr. T,Mr. T,1/1,1,1,['Mr. T'],['Mr. T'],10,9,9,9,1.0
+24,5,1,Erika Jayne,Bonner Bolton,0/1,0,1,['Erika Jayne'],['Bonner Bolton'],9,8,8,7,0.875
+24,6,1,Heather Morris,Nick Viall,0/1,0,1,['Heather Morris'],['Nick Viall'],8,7,7,6,0.8571428571428571
+24,7,2,"Nick Viall, Nancy Kerrigan","Bonner Bolton, Nick Viall",1/2,1,2,"['Nick Viall', 'Nancy Kerrigan']","['Bonner Bolton', 'Nick Viall']",7,5,5,4,0.8
+24,8,1,Bonner Bolton,Bonner Bolton,1/1,1,1,['Bonner Bolton'],['Bonner Bolton'],5,4,4,4,1.0
+24,9,1,Simone Biles,David Ross,0/1,0,1,['Simone Biles'],['David Ross'],4,3,3,2,0.6666666666666666
+25,2,2,"Barbara Corcoran, Debbie Gibson","Barbara Corcoran, Derek Fisher",1/2,1,2,"['Barbara Corcoran', 'Debbie Gibson']","['Barbara Corcoran', 'Derek Fisher']",13,11,11,10,0.9090909090909091
+25,4,1,Derek Fisher,Nick Lachey,0/1,0,1,['Derek Fisher'],['Nick Lachey'],11,10,10,9,0.9
+25,5,1,Sasha Pieterse,Nick Lachey,0/1,0,1,['Sasha Pieterse'],['Nick Lachey'],10,9,9,8,0.8888888888888888
+25,6,1,Nick Lachey,Nick Lachey,1/1,1,1,['Nick Lachey'],['Nick Lachey'],9,8,8,8,1.0
+25,7,2,"Nikki Bella, Vanessa Lachey","Nikki Bella, Terrell Owens",1/2,1,2,"['Nikki Bella', 'Vanessa Lachey']","['Nikki Bella', 'Terrell Owens']",8,6,6,5,0.8333333333333334
+25,8,1,Terrell Owens,Drew Scott,0/1,0,1,['Terrell Owens'],['Drew Scott'],6,5,5,4,0.8
+25,9,1,Victoria Arlen,Drew Scott,0/1,0,1,['Victoria Arlen'],['Drew Scott'],5,4,4,3,0.75
+26,1,2,"Johnny Damon, Jamie Anderson","Kareem Abdul-Jabbar, Johnny Damon",1/2,1,2,"['Johnny Damon', 'Jamie Anderson']","['Kareem Abdul-Jabbar', 'Johnny Damon']",10,8,8,7,0.875
+26,2,2,"Kareem Abdul-Jabbar, Arike Ogunbowale","Kareem Abdul-Jabbar, Jennie Finch Daigle",1/2,1,2,"['Kareem Abdul-Jabbar', 'Arike Ogunbowale']","['Kareem Abdul-Jabbar', 'Jennie Finch Daigle']",8,6,6,5,0.8333333333333334
+26,3,3,"Jennie Finch Daigle, Chris Mazdzer, Mirai Nagasu","Jennie Finch Daigle, Chris Mazdzer, Mirai Nagasu",3/3,3,3,"['Jennie Finch Daigle', 'Chris Mazdzer', 'Mirai Nagasu']","['Jennie Finch Daigle', 'Chris Mazdzer', 'Mirai Nagasu']",6,3,3,3,1.0
+27,1,1,Nikki Glaser,Joe Amabile,0/1,0,1,['Nikki Glaser'],['Joe Amabile'],13,12,12,11,0.9166666666666666
+27,2,1,Danelle Umstead,Danelle Umstead,1/1,1,1,['Danelle Umstead'],['Danelle Umstead'],12,11,11,11,1.0
+27,3,1,Nancy McKeon,Joe Amabile,0/1,0,1,['Nancy McKeon'],['Joe Amabile'],11,10,10,9,0.9
+27,4,1,Tinashe,Joe Amabile,0/1,0,1,['Tinashe'],['Joe Amabile'],10,9,9,8,0.8888888888888888
+27,6,1,Mary Lou Retton,John Schneider,0/1,0,1,['Mary Lou Retton'],['John Schneider'],9,8,8,7,0.875
+27,7,2,"DeMarcus Ware, John Schneider","Joe Amabile, DeMarcus Ware",1/2,1,2,"['DeMarcus Ware', 'John Schneider']","['Joe Amabile', 'DeMarcus Ware']",8,6,6,5,0.8333333333333334
+27,8,2,"Joe Amabile, Juan Pablo Di Pace","Joe Amabile, Bobby Bones",1/2,1,2,"['Joe Amabile', 'Juan Pablo Di Pace']","['Joe Amabile', 'Bobby Bones']",6,4,4,3,0.75
+28,2,2,"Ray Lewis, Mary Wilson","Lamar Odom, Ray Lewis",1/2,1,2,"['Ray Lewis', 'Mary Wilson']","['Lamar Odom', 'Ray Lewis']",12,10,10,9,0.9
+28,4,1,Lamar Odom,Lamar Odom,1/1,1,1,['Lamar Odom'],['Lamar Odom'],10,9,9,9,1.0
+28,6,1,Sailor Brinkley-Cook,Sean Spicer,0/1,0,1,['Sailor Brinkley-Cook'],['Sean Spicer'],9,8,8,7,0.875
+28,7,1,Karamo Brown,Sean Spicer,0/1,0,1,['Karamo Brown'],['Sean Spicer'],8,7,7,6,0.8571428571428571
+28,8,1,Kate Flannery,Sean Spicer,0/1,0,1,['Kate Flannery'],['Sean Spicer'],7,6,6,5,0.8333333333333334
+28,9,1,Sean Spicer,Sean Spicer,1/1,1,1,['Sean Spicer'],['Sean Spicer'],6,5,5,5,1.0
+28,10,1,James Van Der Beek,James Van Der Beek,1/1,1,1,['James Van Der Beek'],['James Van Der Beek'],5,4,4,4,1.0
+29,2,1,Charles Oakley,Charles Oakley,1/1,1,1,['Charles Oakley'],['Charles Oakley'],15,14,14,14,1.0
+29,3,1,Carole Baskin,Carole Baskin,1/1,1,1,['Carole Baskin'],['Carole Baskin'],14,13,13,13,1.0
+29,4,1,Anne Heche,Anne Heche,1/1,1,1,['Anne Heche'],['Anne Heche'],13,12,12,12,1.0
+29,5,1,Jesse Metcalfe,Jesse Metcalfe,1/1,1,1,['Jesse Metcalfe'],['Jesse Metcalfe'],12,11,11,11,1.0
+29,6,1,Veron Davis,Skai Jackson,0/1,0,1,['Veron Davis'],['Skai Jackson'],11,10,10,9,0.9
+29,7,2,"Monica Aldama, Jeannie Mai","Monica Aldama, Kaitlyn Bristowe",1/2,1,2,"['Monica Aldama', 'Jeannie Mai']","['Monica Aldama', 'Kaitlyn Bristowe']",10,8,8,7,0.875
+29,8,1,Chrishell Stause,Nelly,0/1,0,1,['Chrishell Stause'],['Nelly'],8,7,7,6,0.8571428571428571
+29,9,1,AJ McLean,AJ McLean,1/1,1,1,['AJ McLean'],['AJ McLean'],7,6,6,6,1.0
+29,10,2,"Johnny Weir, Skai Jackson","Johnny Weir, Nelly",1/2,1,2,"['Johnny Weir', 'Skai Jackson']","['Johnny Weir', 'Nelly']",6,4,4,3,0.75
+30,2,1,Martin Kove,Martin Kove,1/1,1,1,['Martin Kove'],['Martin Kove'],15,14,14,14,1.0
+30,3,1,Christine Chiu,Brian Austin Green,0/1,0,1,['Christine Chiu'],['Brian Austin Green'],14,13,13,12,0.9230769230769231
+30,4,2,"Brian Austin Green, Matt James","Brian Austin Green, Kenya Moore",1/2,1,2,"['Brian Austin Green', 'Matt James']","['Brian Austin Green', 'Kenya Moore']",13,11,11,10,0.9090909090909091
+30,5,1,Melanie C,Iman Shumpert,0/1,0,1,['Melanie C'],['Iman Shumpert'],11,10,10,9,0.9
+30,6,1,Kenya Moore,Kenya Moore,1/1,1,1,['Kenya Moore'],['Kenya Moore'],10,9,9,9,1.0
+30,7,1,"Mike ""The Miz"" Mizanin","Mike ""The Miz"" Mizanin",1/1,1,1,"['Mike ""The Miz"" Mizanin']","['Mike ""The Miz"" Mizanin']",9,8,8,8,1.0
+30,8,2,"Jimmie Allen, Olivia Jade","Jimmie Allen, Olivia Jade",2/2,2,2,"['Jimmie Allen', 'Olivia Jade']","['Jimmie Allen', 'Olivia Jade']",8,6,6,6,1.0
+30,9,2,"Melora Hardin, Suni Lee","Melora Hardin, Cody Rigsby",1/2,1,2,"['Melora Hardin', 'Suni Lee']","['Melora Hardin', 'Cody Rigsby']",6,4,4,3,0.75
+31,1,1,Jason Lewis,Jason Lewis,1/1,1,1,['Jason Lewis'],['Jason Lewis'],16,15,15,15,1.0
+31,2,1,Teresa Giudice,Cheryl Ladd,0/1,0,1,['Teresa Giudice'],['Cheryl Ladd'],15,14,14,13,0.9285714285714286
+31,3,1,Cheryl Ladd,Cheryl Ladd,1/1,1,1,['Cheryl Ladd'],['Cheryl Ladd'],14,13,13,13,1.0
+31,4,1,Sam Champion,Sam Champion,1/1,1,1,['Sam Champion'],['Sam Champion'],13,12,12,12,1.0
+31,5,2,"Joseph Baena, Selma Blair","Vinny Guadagnino, Daniel Durant",0/2,0,2,"['Joseph Baena', 'Selma Blair']","['Vinny Guadagnino', 'Daniel Durant']",12,10,10,8,0.8
+31,6,1,Jessie James Decker,Vinny Guadagnino,0/1,0,1,['Jessie James Decker'],['Vinny Guadagnino'],10,9,9,8,0.8888888888888888
+31,7,1,Jordin Sparks,Vinny Guadagnino,0/1,0,1,['Jordin Sparks'],['Vinny Guadagnino'],9,8,8,7,0.875
+31,8,2,"Vinny Guadagnino, Heidi D'Amelio","Vinny Guadagnino, Heidi D'Amelio",2/2,2,2,"['Vinny Guadagnino', ""Heidi D'Amelio""]","['Vinny Guadagnino', ""Heidi D'Amelio""]",8,6,6,6,1.0
+31,9,2,"Trevor Donovan, Daniel Durant","Trevor Donovan, Daniel Durant",2/2,2,2,"['Trevor Donovan', 'Daniel Durant']","['Trevor Donovan', 'Daniel Durant']",6,4,4,4,1.0
+32,1,1,Matt Walsh,Matt Walsh,1/1,1,1,['Matt Walsh'],['Matt Walsh'],14,13,13,13,1.0
+32,2,1,Jamie Lynn Spears,Mauricio Umansky,0/1,0,1,['Jamie Lynn Spears'],['Mauricio Umansky'],13,12,12,11,0.9166666666666666
+32,3,1,Tyson Beckford,Tyson Beckford,1/1,1,1,['Tyson Beckford'],['Tyson Beckford'],12,11,11,11,1.0
+32,4,1,Adrian Peterson,Barry Williams,0/1,0,1,['Adrian Peterson'],['Barry Williams'],11,10,10,9,0.9
+32,5,1,Mira Sorvino,Harry Jowsey,0/1,0,1,['Mira Sorvino'],['Harry Jowsey'],10,9,9,8,0.8888888888888888
+32,6,1,Mauricio Umansky,Harry Jowsey,0/1,0,1,['Mauricio Umansky'],['Harry Jowsey'],9,8,8,7,0.875
+32,7,1,Lele Pons,Barry Williams,0/1,0,1,['Lele Pons'],['Barry Williams'],8,7,7,6,0.8571428571428571
+32,8,1,Barry Williams,Harry Jowsey,0/1,0,1,['Barry Williams'],['Harry Jowsey'],7,6,6,5,0.8333333333333334
+32,9,1,Harry Jowsey,Harry Jowsey,1/1,1,1,['Harry Jowsey'],['Harry Jowsey'],6,5,5,5,1.0
+33,2,2,"Anna Delvey, Tori Spelling","Eric Roberts, Reginald VelJohnson",0/2,0,2,"['Anna Delvey', 'Tori Spelling']","['Eric Roberts', 'Reginald VelJohnson']",13,11,11,9,0.8181818181818182
+33,3,2,"Reginald VelJohnson, Eric Roberts","Reginald VelJohnson, Eric Roberts",2/2,2,2,"['Reginald VelJohnson', 'Eric Roberts']","['Reginald VelJohnson', 'Eric Roberts']",11,9,9,9,1.0
+33,4,1,Brooks Nader,Dwight Howard,0/1,0,1,['Brooks Nader'],['Dwight Howard'],9,8,8,7,0.875
+33,5,1,Phaedra Parks,Phaedra Parks,1/1,1,1,['Phaedra Parks'],['Phaedra Parks'],8,7,7,7,1.0
+33,6,1,Jenn Tran,Ilona Maher,0/1,0,1,['Jenn Tran'],['Ilona Maher'],7,6,6,5,0.8333333333333334
+33,7,1,Dwight Howard,Dwight Howard,1/1,1,1,['Dwight Howard'],['Dwight Howard'],6,5,5,5,1.0
+34,2,2,"Corey Feldman, Baron Davis","Corey Feldman, Baron Davis",2/2,2,2,"['Corey Feldman', 'Baron Davis']","['Corey Feldman', 'Baron Davis']",14,12,12,12,1.0
+34,3,1,Lauren Jauregui,Lauren Jauregui,1/1,1,1,['Lauren Jauregui'],['Lauren Jauregui'],12,11,11,11,1.0
+34,4,1,Hilaria Baldwin,Andy Richter,0/1,0,1,['Hilaria Baldwin'],['Andy Richter'],11,10,10,9,0.9
+34,6,1,Scott Hoying,Scott Hoying,1/1,1,1,['Scott Hoying'],['Scott Hoying'],10,9,9,9,1.0
+34,7,1,Jen Affleck,Andy Richter,0/1,0,1,['Jen Affleck'],['Andy Richter'],9,8,8,7,0.875
+34,8,1,Danielle Fishel,Andy Richter,0/1,0,1,['Danielle Fishel'],['Andy Richter'],8,7,7,6,0.8571428571428571
+34,9,1,Andy Richter,Andy Richter,1/1,1,1,['Andy Richter'],['Andy Richter'],7,6,6,6,1.0
+34,10,1,Whitney Leavitt,Dylan Efron,0/1,0,1,['Whitney Leavitt'],['Dylan Efron'],6,5,5,4,0.8

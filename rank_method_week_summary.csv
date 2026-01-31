@@ -1,0 +1,79 @@
+﻿season,week,num_contestants,k_actual_elim,predicted_elim_names,actual_elim_names,week_correct
+1,1,6,0,,,True
+1,2,6,1,Evander Holyfield,Trista Sutter,False
+1,3,5,1,Evander Holyfield,Evander Holyfield,True
+1,4,4,1,Joey McIntyre,Rachel Hunter,False
+1,5,3,1,Joey McIntyre,Joey McIntyre,True
+2,1,10,1,Kenny Mayne,Kenny Mayne,True
+2,2,9,1,Tatum O'Neal,Tatum O'Neal,True
+2,3,8,1,Master P,Giselle Fernandez,False
+2,4,7,1,Master P,Master P,True
+2,5,6,1,Tia Carrere,Tia Carrere,True
+2,6,5,1,George Hamilton,George Hamilton,True
+2,7,4,1,Jerry Rice,Lisa Rinna,False
+28,1,12,0,,,True
+28,2,12,2,Lamar Odom; Ray Lewis,Mary Wilson; Ray Lewis,False
+28,3,10,0,,,True
+28,4,10,1,Lamar Odom,Lamar Odom,True
+28,5,9,0,,,True
+28,6,9,1,Sean Spicer,Sailor Brinkley-Cook,False
+28,7,8,1,Karamo Brown,Karamo Brown,True
+28,8,7,1,Sean Spicer,Kate Flannery,False
+28,9,6,1,Sean Spicer,Sean Spicer,True
+28,10,5,1,James Van Der Beek,James Van Der Beek,True
+29,1,15,0,,,True
+29,2,15,1,Charles Oakley,Charles Oakley,True
+29,3,14,1,Carole Baskin,Carole Baskin,True
+29,4,13,1,Anne Heche,Anne Heche,True
+29,5,12,1,Jesse Metcalfe,Jesse Metcalfe,True
+29,6,11,1,Veron Davis,Veron Davis,True
+29,7,10,2,Kaitlyn Bristowe; Monica Aldama,Jeannie Mai; Monica Aldama,False
+29,8,8,1,Nelly,Chrishell Stause,False
+29,9,7,1,AJ McLean,AJ McLean,True
+29,10,6,2,Johnny Weir; Nelly,Johnny Weir; Skai Jackson,False
+30,1,15,0,,,True
+30,2,15,1,Martin Kove,Martin Kove,True
+30,3,14,1,Brian Austin Green,Christine Chiu,False
+30,4,13,2,Brian Austin Green; Matt James,Brian Austin Green; Matt James,True
+30,5,11,1,"Mike ""The Miz"" Mizanin",Melanie C,False
+30,6,10,1,Kenya Moore,Kenya Moore,True
+30,7,9,1,"Mike ""The Miz"" Mizanin","Mike ""The Miz"" Mizanin",True
+30,8,8,2,Jimmie Allen; Olivia Jade,Jimmie Allen; Olivia Jade,True
+30,9,6,2,Cody Rigsby; Melora Hardin,Melora Hardin; Suni Lee,False
+31,1,16,1,Jason Lewis,Jason Lewis,True
+31,2,15,1,Teresa Giudice,Teresa Giudice,True
+31,3,14,1,Cheryl Ladd,Cheryl Ladd,True
+31,4,13,1,Sam Champion,Sam Champion,True
+31,5,12,2,Daniel Durant; Vinny Guadagnino,Joseph Baena; Selma Blair,False
+31,6,10,1,Jessie James Decker,Jessie James Decker,True
+31,7,9,1,Jordin Sparks,Jordin Sparks,True
+31,8,8,2,Heidi D'Amelio; Vinny Guadagnino,Heidi D'Amelio; Vinny Guadagnino,True
+31,9,6,2,Daniel Durant; Trevor Donovan,Daniel Durant; Trevor Donovan,True
+32,1,14,1,Matt Walsh,Matt Walsh,True
+32,2,13,1,Mauricio Umansky,Jamie Lynn Spears,False
+32,3,12,1,Adrian Peterson,Tyson Beckford,False
+32,4,11,1,Mauricio Umansky,Adrian Peterson,False
+32,5,10,1,Mira Sorvino,Mira Sorvino,True
+32,6,9,1,Mauricio Umansky,Mauricio Umansky,True
+32,7,8,1,Barry Williams,Lele Pons,False
+32,8,7,1,Harry Jowsey,Barry Williams,False
+32,9,6,1,Harry Jowsey,Harry Jowsey,True
+32,10,5,0,,,True
+33,1,13,0,,,True
+33,2,13,2,Anna Delvey; Eric Roberts,Anna Delvey; Tori Spelling,False
+33,3,11,2,Eric Roberts; Reginald VelJohnson,Eric Roberts; Reginald VelJohnson,True
+33,4,9,1,Dwight Howard,Brooks Nader,False
+33,5,8,1,Phaedra Parks,Phaedra Parks,True
+33,6,7,1,Ilona Maher,Jenn Tran,False
+33,7,6,1,Dwight Howard,Dwight Howard,True
+33,8,5,0,,,True
+34,1,14,0,,,True
+34,2,14,2,Baron Davis; Corey Feldman,Baron Davis; Corey Feldman,True
+34,3,12,1,Lauren Jauregui,Lauren Jauregui,True
+34,4,11,1,Danielle Fishel,Hilaria Baldwin,False
+34,5,10,0,,,True
+34,6,10,1,Scott Hoying,Scott Hoying,True
+34,7,9,1,Jen Affleck,Jen Affleck,True
+34,8,8,1,Danielle Fishel,Danielle Fishel,True
+34,9,7,1,Andy Richter,Andy Richter,True
+34,10,6,1,Dylan Efron,Whitney Leavitt,False

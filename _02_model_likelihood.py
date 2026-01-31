@@ -1,0 +1,343 @@
+import re
+import numpy as np
+import pandas as pd
+from dataclasses import dataclass
+from typing import List, Dict, Tuple
+
+CSV_PATH = "/Users/garytchois/Desktop/vs/2026_MCM_Problem_C_Data_with_week_stats1.csv"
+
+# ---------- 0) 规则：按赛季切换 percent / rank ----------
+def season_rule(season: int) -> str:
+    """
+    题面给的合理假设：
+    - S1-2: rank
+    - S3-27a: percent
+    - S28-34: 回到 rank（并可能有 bottom2+judge-save；第一问先不加）
+    """
+    if season in (1, 2) or season >= 28:
+        return "rank"
+    return "percent"
+
+# ---------- 1) 读入 ----------
+def load_data(csv_path: str) -> pd.DataFrame:
+    # 你的预处理文件里 judge_score_sum 已经是 float；这里仍做一次保险
+    df = pd.read_csv(csv_path)
+
+    # 赛季内 contestant_id：0..N-1（固定、可复现）
+    # 用 celebrity_name 排序能确保不同机器/不同读入顺序也一致
+    df = df.sort_values(["season", "celebrity_name"]).reset_index(drop=True)
+    df["contestant_id"] = df.groupby("season").cumcount()
+
+    return df
+
+# ---------- 2) 取出每周 judge_total（你已预处理好 week{k}_judge_score_sum） ----------
+def get_week_list(df: pd.DataFrame) -> list[int]:
+    weeks = []
+    for c in df.columns:
+        m = re.fullmatch(r"week(\d+)_judge_score_sum", c)
+        if m:
+            weeks.append(int(m.group(1)))
+    return sorted(set(weeks))
+
+def build_judge_total_long(df: pd.DataFrame, weeks: list[int]) -> pd.DataFrame:
+    rows = []
+    for w in weeks:
+        col = f"week{w}_judge_score_sum"
+        if col not in df.columns:
+            continue
+        tmp = df[["season", "contestant_id", "celebrity_name", col]].copy()
+        tmp = tmp.rename(columns={col: "judge_total"})
+        tmp["week"] = w
+        rows.append(tmp)
+
+    long = pd.concat(rows, ignore_index=True)
+
+    # judge_total：NaN 表示该周没播/没有该选手数据；0 表示淘汰后（题面说明会用 0）
+    long["judge_total"] = pd.to_numeric(long["judge_total"], errors="coerce")
+    return long
+
+# ---------- 3) 解析 results：淘汰周 / withdrew ----------
+def parse_elim_week(results: str) -> int | None:
+    m = re.search(r"Eliminated Week (\d+)", str(results))
+    return int(m.group(1)) if m else None
+
+def is_withdrew(results: str) -> bool:
+    return str(results).strip().lower() == "withdrew"
+
+# ---------- 4) 构造 withdrew 的“发生周” ----------
+def infer_withdrew_week(df: pd.DataFrame, judge_long: pd.DataFrame, weeks: list[int]) -> dict[tuple[int,int], int]:
+    """
+    返回 {(season, contestant_id) -> withdrew_week}
+
+    你的 results 里 Withdrew 没带 Week k，我们用数据反推：
+    withdrew_week = 最后一次 judge_total > 0 的周（通常表示他最后一次参加表演的周）
+    """
+    withdrew_people = df[df["results"].apply(is_withdrew)][["season", "contestant_id"]]
+    withdrew_set = set(map(tuple, withdrew_people.values.tolist()))
+    if not withdrew_set:
+        return {}
+
+    # pivot：每人每周 judge_total
+    pivot = judge_long.pivot_table(
+        index=["season", "contestant_id"],
+        columns="week",
+        values="judge_total",
+        aggfunc="first"
+    )
+
+    out = {}
+    for key in withdrew_set:
+        if key not in pivot.index:
+            continue
+        series = pivot.loc[key]
+        active_weeks = [w for w in weeks if (w in series.index and pd.notna(series[w]) and series[w] > 0)]
+        if active_weeks:
+            out[key] = max(active_weeks)
+    return out
+
+# ---------- 5) 事件对象 ----------
+@dataclass
+class WeekEvent:
+    season: int
+    week: int
+    rule: str               # "percent" or "rank"
+    active_ids: list[int]   # 该周在赛选手（judge_total > 0）
+    J: np.ndarray           # active 对应 judge_total
+    zJ: np.ndarray          # active 内 z-score(J)
+    j_percent: np.ndarray   # active 内 J / sum(J)
+    eliminated_ids: list[int]   # 该周观测淘汰（可能 0 个或多个）
+    skip_likelihood: bool       # withdrew 等“非规则淘汰周”建议跳过
+    note: str
+
+def build_events(df: pd.DataFrame, judge_long: pd.DataFrame, weeks: list[int]) -> list[WeekEvent]:
+    # 观测淘汰：results 里带 Eliminated Week k 的人
+    df2 = df.copy()
+    df2["elim_week"] = df2["results"].apply(parse_elim_week)
+
+    elim_map = (
+        df2.dropna(subset=["elim_week"])
+        .groupby(["season", "elim_week"])["contestant_id"]
+        .apply(list)
+        .to_dict()
+    )
+
+    withdrew_week = infer_withdrew_week(df2, judge_long, weeks)  # {(season,cid)->w}
+
+    # roster：每赛季每周 active_ids（judge_total > 0）
+    # 注意：judge_total==0 代表淘汰后，必须剔除；NaN 代表没播/没数据，也剔除
+    active_long = judge_long[(judge_long["judge_total"].notna()) & (judge_long["judge_total"] > 0)]
+    roster_map = (
+        active_long.groupby(["season", "week"])["contestant_id"]
+        .apply(list)
+        .to_dict()
+    )
+
+    # 取 judge_total 映射方便快速构造 J
+    jt_map = {
+        (int(r.season), int(r.week), int(r.contestant_id)): float(r.judge_total)
+        for r in judge_long.itertuples(index=False)
+        if pd.notna(r.judge_total)
+    }
+
+    events: list[WeekEvent] = []
+    seasons = sorted(df2["season"].unique().tolist())
+
+    for s in seasons:
+        for w in weeks:
+            active = roster_map.get((s, w), [])
+            if len(active) == 0:
+                # 这个赛季该周没播/没到这周：跳过
+                continue
+
+            J = np.array([jt_map.get((s, w, i), np.nan) for i in active], dtype=float)
+
+            # active 内标准化
+            m = np.nanmean(J)
+            sd = np.nanstd(J)
+            zJ = (J - m) / (sd + 1e-8)
+
+            # judges percent（percent 规则要用；rank 规则可不用但保留）
+            sumJ = np.nansum(J)
+            j_percent = J / (sumJ + 1e-12)
+
+            eliminated = elim_map.get((s, w), [])
+            rule = season_rule(int(s))
+
+            # withdrew 周标记：如果该赛季存在有人 withdrew，并且他的 withdrew_week == w，则这周建议 skip
+            skip = False
+            note = ""
+            for (ss, cid), ww in withdrew_week.items():
+                if ss == s and ww == w:
+                    skip = True
+                    note = "withdrew"
+                    break
+
+            events.append(
+                WeekEvent(
+                    season=int(s),
+                    week=int(w),
+                    rule=rule,
+                    active_ids=active,
+                    J=J,
+                    zJ=zJ,
+                    j_percent=j_percent,
+                    eliminated_ids=eliminated,
+                    skip_likelihood=skip,
+                    note=note
+                )
+            )
+
+    return events
+
+# ---------- 6) 快速自检 ----------
+def sanity_check(df: pd.DataFrame, events: list[WeekEvent]) -> None:
+    print("rows:", df.shape[0], "seasons:", df["season"].nunique())
+    print("events:", len(events))
+    elim_weeks = sum(1 for e in events if len(e.eliminated_ids) > 0)
+    print("weeks with observed elimination:", elim_weeks)
+    wd = [e for e in events if e.note == "withdrew"]
+    print("weeks flagged withdrew:", len(wd))
+    if wd:
+        print("example withdrew week:", wd[0].season, wd[0].week, "active_n=", len(wd[0].active_ids))
+
+# ========= 工具函数 =========
+def logsumexp(a: np.ndarray) -> float:
+    m = np.max(a)
+    return float(m + np.log(np.sum(np.exp(a - m)) + 1e-300))
+
+def log_softmax(a: np.ndarray) -> np.ndarray:
+    return a - logsumexp(a)
+
+def softmax(a: np.ndarray) -> np.ndarray:
+    ls = log_softmax(a)
+    return np.exp(ls)
+
+def rank_desc(values: np.ndarray) -> np.ndarray:
+    """
+    返回名次（1=最好，n=最差），按 values 从大到小排序。
+    ties 用平均名次（简单起见；也可以用随机打散）。
+    """
+    order = np.argsort(-values)
+    ranks = np.empty(len(values), dtype=float)
+    ranks[order] = np.arange(1, len(values) + 1, dtype=float)
+
+    uniq = {}
+    for i, v in enumerate(values):
+        uniq.setdefault(v, []).append(i)
+    for v, idxs in uniq.items():
+        if len(idxs) > 1:
+            avg = float(np.mean(ranks[idxs]))
+            ranks[idxs] = avg
+    return ranks
+
+# ========= 由 (mu, gamma) 得到当周 vote share =========
+def vote_share(mu_vec: np.ndarray, zJ: np.ndarray, gamma: float) -> np.ndarray:
+    """
+    p_i = softmax(mu_i + gamma * zJ_i)
+    """
+    return softmax(mu_vec + gamma * zJ)
+
+# ========= 两套规则的 hazard（越大越“危险”） =========
+def hazard_percent(j_percent: np.ndarray, p: np.ndarray, w: float = 0.5) -> np.ndarray:
+    """
+    percent 规则：combined = w * judge_percent + (1-w) * vote_share，越小越危险
+    hazard = -combined（越大越危险）
+    """
+    combined = w * j_percent + (1.0 - w) * p
+    return -combined
+
+def hazard_rank(J: np.ndarray, p: np.ndarray) -> np.ndarray:
+    """
+    rank 规则：用名次合并（1最好，n最差）
+    combined_rank = (rank(J) + rank(p))/2，越大越危险
+    hazard = combined_rank
+    """
+    rj = rank_desc(J)     # J 越大越好
+    rp = rank_desc(p)     # p 越大越好
+    return 0.5 * (rj + rp)
+
+# ========= Plackett–Luce 无放回：顺序淘汰似然 =========
+def elimination_loglik_for_event(event, mu_s: np.ndarray, gamma: float, kappa: float, w_percent: float = 0.5) -> float:
+    """
+    event: 你在 01 脚本里构造的 WeekEvent
+    mu_s: shape (N_season,)
+    gamma, kappa > 0
+    返回该周 log P(observed eliminated_ids | params)
+    """
+    if getattr(event, "skip_likelihood", False):
+        return 0.0
+
+    eliminated_ids: List[int] = list(event.eliminated_ids)
+    if len(eliminated_ids) == 0:
+        return 0.0
+
+    remaining: List[int] = list(event.active_ids)
+    ll = 0.0
+
+    for e_id in eliminated_ids:
+        if e_id not in remaining:
+            return -np.inf
+
+        rem_idx_map = {cid: i for i, cid in enumerate(remaining)}
+        idxs = np.array([rem_idx_map[cid] for cid in remaining], dtype=int)
+
+        active_map = {cid: i for i, cid in enumerate(event.active_ids)}
+        sub = np.array([active_map[cid] for cid in remaining], dtype=int)
+
+        mu_vec = mu_s[np.array(remaining, dtype=int)]
+        J_sub = event.J[sub]
+        zJ_sub = event.zJ[sub]
+        jperc_sub = event.j_percent[sub]
+
+        p_sub = vote_share(mu_vec, zJ_sub, gamma)
+
+        if event.rule == "percent":
+            hz = hazard_percent(jperc_sub, p_sub, w=w_percent)
+        elif event.rule == "rank":
+            hz = hazard_rank(J_sub, p_sub)
+        else:
+            raise ValueError(f"Unknown rule: {event.rule}")
+
+        log_q = log_softmax(kappa * hz)
+
+        e_pos = remaining.index(e_id)
+        ll += float(log_q[e_pos])
+
+        remaining.remove(e_id)
+
+    return ll
+
+# ========= 先验 + 总 log posterior =========
+def center_mu(mu: np.ndarray) -> np.ndarray:
+    return mu - np.mean(mu)
+
+def log_prior(mu_by_season: Dict[int, np.ndarray], gamma: float, log_kappa: float,
+              sigma_mu: float = 1.0) -> float:
+    """
+    mu_si ~ N(0, sigma_mu^2) + 每赛季 sum(mu)=0（我们通过 center_mu 在 proposal 里强制）
+    gamma ~ N(0,1)
+    log_kappa ~ N(0,1)
+    """
+    mu_all = np.concatenate([mu_by_season[s] for s in sorted(mu_by_season.keys())])
+    lp = 0.0
+    lp += -0.5 * np.sum((mu_all / sigma_mu) ** 2)
+    lp += -0.5 * (gamma ** 2)
+    lp += -0.5 * (log_kappa ** 2)
+    return float(lp)
+
+def log_posterior(mu_by_season: Dict[int, np.ndarray], gamma: float, log_kappa: float, events: list,
+                  sigma_mu: float = 1.0, w_percent: float = 0.5) -> float:
+    kappa = float(np.exp(log_kappa))
+    lp = log_prior(mu_by_season, gamma, log_kappa, sigma_mu=sigma_mu)
+
+    ll = 0.0
+    for ev in events:
+        mu_s = mu_by_season[ev.season]
+        ll += elimination_loglik_for_event(ev, mu_s=mu_s, gamma=gamma, kappa=kappa, w_percent=w_percent)
+
+    return lp + ll
+
+
+
+
+   

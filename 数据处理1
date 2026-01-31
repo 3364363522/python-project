@@ -1,0 +1,111 @@
+import re
+import numpy as np
+import pandas as pd
+from pathlib import Path
+
+
+def read_table_preserve_na_strings(path: str) -> pd.DataFrame:
+    """
+    读取 csv/xlsx，并且保留原始的 "N/A" 字符串不变（不转成 NaN）。
+    """
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"找不到文件：{p}")
+
+    suf = p.suffix.lower()
+    if suf == ".csv":
+        # 关键：keep_default_na=False + na_filter=False => 不把 "N/A" 当 NaN
+        return pd.read_csv(p, keep_default_na=False, na_filter=False)
+    elif suf in [".xlsx", ".xls"]:
+        # Excel 同理：na_filter=False 不做 NA 解析
+        return pd.read_excel(p, na_filter=False)
+    else:
+        raise ValueError(f"不支持的文件类型：{suf}（请用 .csv 或 .xlsx）")
+
+
+def add_weekly_judge_stats(
+    input_path: str,
+    output_path: str,
+    season_col: str = "season",
+    rank_within_season: bool = True,
+) -> None:
+    """
+    对每个 weekX 添加四列：
+      weekX_judge_score_sum        评委得分总和（忽略 N/A）
+      weekX_judge_count            有效评委个数（忽略 N/A）
+      weekX_judge_score_avg        平均评委得分
+      weekX_judge_score_avg_rank   本周平均分排名（默认 season 内，高分 rank=1）
+
+    规则：
+      - 仅当该选手该周所有评委都没打分（全是 N/A/空）时，这四列才写 "N/A"
+      - 原始数据里 score 列为 "N/A" 的格子，导出后仍保持 "N/A"（不会变空）
+    """
+    out = read_table_preserve_na_strings(input_path)
+
+    # 找出所有形如 weekX_judgeY_score 的列
+    score_pat = re.compile(r"^week(\d+)_judge(\d+)_score$", re.IGNORECASE)
+    week_to_cols = {}
+    for col in out.columns:
+        m = score_pat.match(col)
+        if m:
+            wk = int(m.group(1))
+            week_to_cols.setdefault(wk, []).append(col)
+
+    if not week_to_cols:
+        raise ValueError("未找到形如 weekX_judgeY_score 的列，请检查列名是否一致。")
+
+    has_season = season_col in out.columns
+
+    for wk, cols in sorted(week_to_cols.items()):
+        # 计算用的数值版：把 "N/A"/"NA"/空字符串 临时转 NaN，再转数值
+        scores = out[cols].replace({"N/A": np.nan, "NA": np.nan, "": np.nan})
+        scores = scores.apply(pd.to_numeric, errors="coerce")
+
+        cnt = scores.count(axis=1)              # 有效评委数
+        s = scores.sum(axis=1, min_count=1)     # 全缺失 => NaN
+        avg = s / cnt.replace(0, np.nan)
+
+        # 仅当该周全缺失才写 N/A
+        mask_all_na = cnt == 0
+
+        # 排名（高分 rank=1）
+        if rank_within_season and has_season:
+            rank = avg.groupby(out[season_col]).rank(method="min", ascending=False)
+        else:
+            rank = avg.rank(method="min", ascending=False)
+
+        base = f"week{wk}"
+        sum_col  = f"{base}_judge_score_sum"
+        cnt_col  = f"{base}_judge_count"
+        avg_col  = f"{base}_judge_score_avg"
+        rank_col = f"{base}_judge_score_avg_rank"
+
+        out[sum_col] = s.astype(object).where(~mask_all_na, "N/A")
+        out[cnt_col] = cnt.astype(object).where(~mask_all_na, "N/A")
+        out[avg_col] = avg.astype(object).where(~mask_all_na, "N/A")
+
+        out[rank_col] = (
+            rank.round()
+            .astype("Int64")     # 可空整数
+            .astype(object)
+            .where(~mask_all_na, "N/A")
+        )
+
+    # 输出
+    op = Path(output_path)
+    suf = op.suffix.lower()
+    if suf == ".csv":
+        out.to_csv(op, index=False, encoding="utf-8-sig")
+    elif suf in [".xlsx", ".xls"]:
+        out.to_excel(op, index=False)
+    else:
+        # 默认输出 csv
+        out.to_csv(op.with_suffix(".csv"), index=False, encoding="utf-8-sig")
+
+    print(f"Done. Saved to: {op}")
+
+
+if __name__ == "__main__":
+    input_path = r"/Users/garytchois/Desktop/vs/celebrity_homestate_filled_preserve_NA"
+    output_path = r"2026_MCM_Problem_C_Data_with_week_stats.csv"
+    add_weekly_judge_stats(input_path, output_path)

@@ -1,0 +1,262 @@
+season,week,n_to_eliminate,actual_eliminated,predicted_eliminated,prediction_status,correct_count,total_eliminated_actual
+1,2,1,Trista Sutter,Trista Sutter,1/1,1,1
+1,3,1,Evander Holyfield,Evander Holyfield,1/1,1,1
+1,4,1,Rachel Hunter,Rachel Hunter,1/1,1,1
+1,5,1,Joey McIntyre,Kelly Monaco,0/1,0,1
+2,1,1,Kenny Mayne,Kenny Mayne,1/1,1,1
+2,2,1,Tatum O'Neal,Tatum O'Neal,1/1,1,1
+2,3,1,Giselle Fernandez,Giselle Fernandez,1/1,1,1
+2,4,1,Master P,Master P,1/1,1,1
+2,5,1,Tia Carrere,Tia Carrere,1/1,1,1
+2,6,1,George Hamilton,George Hamilton,1/1,1,1
+2,7,1,Lisa Rinna,Lisa Rinna,1/1,1,1
+3,1,1,Tucker Carlson,Tucker Carlson,1/1,1,1
+3,2,1,Shanna Moakler,Jerry Springer,0/1,0,1
+3,3,1,Harry Hamlin,Emmitt Smith,0/1,0,1
+3,4,1,Vivica A. Fox,Sara Evans,0/1,0,1
+3,5,2,"Sara Evans, Willa Ford","Jerry Springer, Sara Evans",1/2,1,2
+3,7,1,Jerry Springer,Jerry Springer,1/1,1,1
+3,8,1,Monique Coleman,Monique Coleman,1/1,1,1
+3,9,1,Joey Lawrence,Mario Lopez,0/1,0,1
+4,2,1,Paulina Porizkova,Clyde Drexler,0/1,0,1
+4,3,1,Shandi Finnessey,Clyde Drexler,0/1,0,1
+4,4,1,Leeza Gibbons,Clyde Drexler,0/1,0,1
+4,5,1,Clyde Drexler,Clyde Drexler,1/1,1,1
+4,6,1,Heather Mills,John Ratzenberger,0/1,0,1
+4,7,1,John Ratzenberger,Billy Ray Cyrus,0/1,0,1
+4,8,1,Billy Ray Cyrus,Billy Ray Cyrus,1/1,1,1
+4,9,1,Ian Ziering,Ian Ziering,1/1,1,1
+5,1,1,Josie Maran,Josie Maran,1/1,1,1
+5,2,1,Albert Reed,Wayne Newton,0/1,0,1
+5,3,1,Wayne Newton,Wayne Newton,1/1,1,1
+5,4,1,Floyd Mayweather Jr.,Mark Cuban,0/1,0,1
+5,5,1,Mark Cuban,Mark Cuban,1/1,1,1
+5,6,1,Sabrina Bryan,Jane Seymour,0/1,0,1
+5,7,1,Jane Seymour,Jane Seymour,1/1,1,1
+5,8,1,Cameron Mathison,Cameron Mathison,1/1,1,1
+5,9,1,Jennie Garth,Marie Osmond,0/1,0,1
+6,2,2,"Monica Seles, Penn Jillette","Monica Seles, Steve Guttenberg",1/2,1,2
+6,3,1,Steve Guttenberg,Marissa Jaret Winokur,0/1,0,1
+6,4,1,Adam Carolla,Adam Carolla,1/1,1,1
+6,5,1,Priscilla Presley,Priscilla Presley,1/1,1,1
+6,6,1,Marlee Matlin,Marlee Matlin,1/1,1,1
+6,7,1,Shannon Elizabeth,Cristian de la Fuente,0/1,0,1
+6,8,1,Mario,Marissa Jaret Winokur,0/1,0,1
+6,9,1,Marissa Jaret Winokur,Marissa Jaret Winokur,1/1,1,1
+7,1,2,"Jeffrey Ross, Ted McGinley","Jeffrey Ross, Cloris Leachman",1/2,1,2
+7,2,2,"Kim Kardashian, Misty May-Treanor","Cloris Leachman, Rocco DiSpirito",0/2,0,2
+7,4,1,Rocco DiSpirito,Rocco DiSpirito,1/1,1,1
+7,5,1,Toni Braxton,Cloris Leachman,0/1,0,1
+7,6,1,Cloris Leachman,Cloris Leachman,1/1,1,1
+7,7,1,Susan Lucci,Cody Linley,0/1,0,1
+7,8,1,Maurice Greene,Maurice Greene,1/1,1,1
+7,9,1,Cody Linley,Cody Linley,1/1,1,1
+8,2,1,Belinda Carlisle,Steve-O,0/1,0,1
+8,3,1,Denise Richards,Steve Wozniak,0/1,0,1
+8,4,2,"Steve Wozniak, Holly Madison","Steve Wozniak, Steve-O",1/2,1,2
+8,5,1,David Alan Grier,Steve-O,0/1,0,1
+8,6,1,Steve-O,Steve-O,1/1,1,1
+8,7,1,Lawrence Taylor,Lawrence Taylor,1/1,1,1
+8,8,1,Chuck Wicks,Melissa Rycroft,0/1,0,1
+8,9,1,Lil' Kim,Ty Murray,0/1,0,1
+8,10,1,Ty Murray,Ty Murray,1/1,1,1
+9,1,2,"Ashley Hamiliton, Macy Gray","Ashley Hamiliton, Macy Gray",2/2,2,2
+9,2,1,Kathy Ireland,Tom DeLay,0/1,0,1
+9,3,2,"Tom DeLay, Debi Mazar","Michael Irvin, Tom DeLay",1/2,1,2
+9,4,1,Chuck Liddell,Louie Vito,0/1,0,1
+9,5,1,Natalie Coughlin,Michael Irvin,0/1,0,1
+9,6,2,"Melissa Joan Hart, Louie Vito","Michael Irvin, Melissa Joan Hart",1/2,1,2
+9,7,2,"Mark Dacascos, Michael Irvin","Mark Dacascos, Michael Irvin",2/2,2,2
+9,8,1,Aaron Carter,Aaron Carter,1/1,1,1
+9,9,1,Joanna Krupa,Donny Osmond,0/1,0,1
+10,2,1,Shannen Doherty,Buzz Aldrin,0/1,0,1
+10,3,1,Buzz Aldrin,Buzz Aldrin,1/1,1,1
+10,4,1,Aiden Turner,Kate Gosselin,0/1,0,1
+10,5,1,Kate Gosselin,Kate Gosselin,1/1,1,1
+10,6,1,Jake Pavelka,Jake Pavelka,1/1,1,1
+10,7,1,Pamela Anderson,Niecy Nash,0/1,0,1
+10,8,1,Niecy Nash,Niecy Nash,1/1,1,1
+10,9,1,Chad Ochocinco,Chad Ochocinco,1/1,1,1
+11,1,1,David Hasselhoff,David Hasselhoff,1/1,1,1
+11,2,1,Michael Bolton,Michael Bolton,1/1,1,1
+11,3,1,Margaret Cho,Margaret Cho,1/1,1,1
+11,4,1,The Situation,The Situation,1/1,1,1
+11,5,1,Florence Henderson,Bristol Palin,0/1,0,1
+11,6,1,Audrina Patridge,Kurt Warner,0/1,0,1
+11,7,1,Rick Fox,Rick Fox,1/1,1,1
+11,8,1,Kurt Warner,Kurt Warner,1/1,1,1
+11,9,1,Brandy,Brandy,1/1,1,1
+12,2,1,Mike Catherwood,Mike Catherwood,1/1,1,1
+12,3,1,Wendy Williams,Wendy Williams,1/1,1,1
+12,4,1,Sugar Ray Leonard,Kendra Wilkinson,0/1,0,1
+12,5,1,Petra Nemcova,Petra Nemcova,1/1,1,1
+12,6,1,Chris Jericho,Chris Jericho,1/1,1,1
+12,7,1,Kendra Wilkinson,Romeo,0/1,0,1
+12,8,1,Romeo,Ralph Macchio,0/1,0,1
+12,9,1,Ralph Macchio,Ralph Macchio,1/1,1,1
+13,1,1,Metta World Peace (Ron),Metta World Peace (Ron),1/1,1,1
+13,2,1,Elisabetta Canalis,Chaz Bono,0/1,0,1
+13,3,1,Kristin Cavallari,Chaz Bono,0/1,0,1
+13,4,1,Chynna Phillips,Carson Kressley,0/1,0,1
+13,5,1,Carson Kressley,Carson Kressley,1/1,1,1
+13,6,1,Chaz Bono,Chaz Bono,1/1,1,1
+13,7,1,David Arquette,Nancy Grace,0/1,0,1
+13,8,1,Nancy Grace,Nancy Grace,1/1,1,1
+13,9,1,Hope Solo,Hope Solo,1/1,1,1
+14,2,1,Martina Navratilova,Martina Navratilova,1/1,1,1
+14,3,1,Jack Wagner,Gavin DeGraw,0/1,0,1
+14,4,1,Sherri Sheperd,Gladys Knight,0/1,0,1
+14,5,1,Gavin DeGraw,Gavin DeGraw,1/1,1,1
+14,6,1,Gladys Knight,Gladys Knight,1/1,1,1
+14,7,1,Jaleel White,Melissa Gilbert,0/1,0,1
+14,8,2,"Melissa Gilbert, Roshon Fegan","Melissa Gilbert, Maria Menounos",1/2,1,2
+14,9,1,Maria Menounos,Katherine Jenkins,0/1,0,1
+15,1,1,Pamela Anderson,Pamela Anderson,1/1,1,1
+15,2,1,Joey Fatone,Bristol Palin,0/1,0,1
+15,3,2,"Drew Lachey, Helio Castroneves","Bristol Palin, Drew Lachey",1/2,1,2
+15,4,1,Bristol Palin,Kirstie Alley,0/1,0,1
+15,6,1,Sabrina Bryan,Emmitt Smith,0/1,0,1
+15,8,2,"Kirstie Alley, Gilles Marini","Kirstie Alley, Shawn Johnson",1/2,1,2
+15,9,2,"Emmitt Smith, Apolo Anton Ohno","Emmitt Smith, Kelly Monaco",1/2,1,2
+16,2,1,Dorothy Hamill,Dorothy Hamill,1/1,1,1
+16,3,1,Wynonna Judd,Wynonna Judd,1/1,1,1
+16,4,1,Lisa Vanderpump,Victor Ortiz,0/1,0,1
+16,5,1,D. L. Hughley,D. L. Hughley,1/1,1,1
+16,6,1,Victor Ortiz,Victor Ortiz,1/1,1,1
+16,7,1,Andy Dick,Andy Dick,1/1,1,1
+16,8,1,Sean Lowe,Sean Lowe,1/1,1,1
+16,9,1,Ingo Rademacher,Ingo Rademacher,1/1,1,1
+17,2,1,Keyshawn Johnson,Bill Nye,0/1,0,1
+17,3,1,Bill Nye,Bill Nye,1/1,1,1
+17,4,1,Valerie Harper,Valerie Harper,1/1,1,1
+17,5,1,Christina Milian,Leah Remini,0/1,0,1
+17,7,1,"Nicole ""Snooki"" Polizzi",Bill Engvall,0/1,0,1
+17,8,1,Brant Daugherty,Elizabeth Berkley Lauren,0/1,0,1
+17,9,1,Elizabeth Berkley Lauren,Bill Engvall,0/1,0,1
+17,10,1,Leah Remini,Bill Engvall,0/1,0,1
+18,1,1,Diana Nyad,Billy Dee Williams,0/1,0,1
+18,2,2,"Billy Dee Williams, Sean Avery","Billy Dee Williams, Sean Avery",2/2,2,2
+18,5,1,Cody Simpson,Drew Carey,0/1,0,1
+18,6,1,Drew Carey,Drew Carey,1/1,1,1
+18,7,1,NeNe Leakes,NeNe Leakes,1/1,1,1
+18,8,1,Danica McKellar,James Maslow,0/1,0,1
+18,9,1,Charlie White,Charlie White,1/1,1,1
+19,1,1,Lolo Jones,Betsey Johnson,0/1,0,1
+19,2,1,Tavis Smiley,Michael Waltrip,0/1,0,1
+19,3,1,Randy Couture,Randy Couture,1/1,1,1
+19,4,1,Betsey Johnson,Jonathan Bennett,0/1,0,1
+19,6,1,Jonathan Bennett,Antonio Sabato Jr.,0/1,0,1
+19,7,1,Antonio Sabato Jr.,Michael Waltrip,0/1,0,1
+19,8,1,Michael Waltrip,Michael Waltrip,1/1,1,1
+19,9,1,Lea Thompson,Tommy Chong,0/1,0,1
+19,10,1,Tommy Chong,Tommy Chong,1/1,1,1
+20,2,1,Redfoo,Chris Soules,0/1,0,1
+20,3,1,Charlotte McKinney,Charlotte McKinney,1/1,1,1
+20,4,1,Michael Sam,Chris Soules,0/1,0,1
+20,5,1,Suzanne Somers,Robert Herjavec,0/1,0,1
+20,6,1,Patti LaBelle,Patti LaBelle,1/1,1,1
+20,7,1,Willow Shields,Chris Soules,0/1,0,1
+20,8,2,"Robert Herjavec, Chris Soules","Robert Herjavec, Chris Soules",2/2,2,2
+20,9,1,Nastia Liukin,Noah Galloway,0/1,0,1
+21,2,3,"Chaka Khan, Kim Zolciak-Biermann, Victor Espinoza","Chaka Khan, Gary Busey, Paula Deen",1/3,1,3
+21,4,1,Gary Busey,Gary Busey,1/1,1,1
+21,6,1,Paula Deen,Paula Deen,1/1,1,1
+21,7,1,Hayes Grier,Tamar Braxton,0/1,0,1
+21,8,1,Andy Grammer,Andy Grammer,1/1,1,1
+21,9,2,"Tamar Braxton, Alexa PenaVega","Tamar Braxton, Carlos PenaVega",1/2,1,2
+22,2,1,Geraldo Rivera,Geraldo Rivera,1/1,1,1
+22,3,1,Mischa Barton,Mischa Barton,1/1,1,1
+22,4,1,Marla Maples,Doug Flutie,0/1,0,1
+22,6,1,Doug Flutie,Doug Flutie,1/1,1,1
+22,7,2,"Von Miller, Kim Fields","Jodie Sweetin, Von Miller",1/2,1,2
+22,8,1,Jodie Sweetin,Wanya Morris,0/1,0,1
+22,9,2,"Antonio Brown, Wanya Morris","Antonio Brown, Ginger Zee",1/2,1,2
+23,2,1,Jake T. Austin,Rick Perry,0/1,0,1
+23,3,1,Rick Perry,Vanilla Ice,0/1,0,1
+23,4,2,"Babyface, Vanilla Ice","Babyface, Ryan Lochte",1/2,1,2
+23,6,1,Amber Rose,Amber Rose,1/1,1,1
+23,7,1,Maureen McCormick,Ryan Lochte,0/1,0,1
+23,8,1,Ryan Lochte,Terra Jole,0/1,0,1
+23,9,1,Marilu Henner,Marilu Henner,1/1,1,1
+23,10,1,Terra Jole,Calvin Johnson Jr.,0/1,0,1
+24,2,1,Chris Kattan,Chris Kattan,1/1,1,1
+24,3,1,Charo,Charo,1/1,1,1
+24,4,1,Mr. T,Mr. T,1/1,1,1
+24,5,1,Erika Jayne,Bonner Bolton,0/1,0,1
+24,6,1,Heather Morris,Nick Viall,0/1,0,1
+24,7,2,"Nick Viall, Nancy Kerrigan","Bonner Bolton, Nick Viall",1/2,1,2
+24,8,1,Bonner Bolton,Bonner Bolton,1/1,1,1
+24,9,1,Simone Biles,David Ross,0/1,0,1
+25,2,2,"Barbara Corcoran, Debbie Gibson","Barbara Corcoran, Derek Fisher",1/2,1,2
+25,4,1,Derek Fisher,Nick Lachey,0/1,0,1
+25,5,1,Sasha Pieterse,Nick Lachey,0/1,0,1
+25,6,1,Nick Lachey,Nick Lachey,1/1,1,1
+25,7,2,"Nikki Bella, Vanessa Lachey","Nikki Bella, Terrell Owens",1/2,1,2
+25,8,1,Terrell Owens,Drew Scott,0/1,0,1
+25,9,1,Victoria Arlen,Drew Scott,0/1,0,1
+26,1,2,"Johnny Damon, Jamie Anderson","Kareem Abdul-Jabbar, Johnny Damon",1/2,1,2
+26,2,2,"Kareem Abdul-Jabbar, Arike Ogunbowale","Kareem Abdul-Jabbar, Jennie Finch Daigle",1/2,1,2
+26,3,3,"Jennie Finch Daigle, Chris Mazdzer, Mirai Nagasu","Jennie Finch Daigle, Chris Mazdzer, Mirai Nagasu",3/3,3,3
+27,1,1,Nikki Glaser,Joe Amabile,0/1,0,1
+27,2,1,Danelle Umstead,Danelle Umstead,1/1,1,1
+27,3,1,Nancy McKeon,Joe Amabile,0/1,0,1
+27,4,1,Tinashe,Joe Amabile,0/1,0,1
+27,6,1,Mary Lou Retton,John Schneider,0/1,0,1
+27,7,2,"DeMarcus Ware, John Schneider","Joe Amabile, DeMarcus Ware",1/2,1,2
+27,8,2,"Joe Amabile, Juan Pablo Di Pace","Joe Amabile, Bobby Bones",1/2,1,2
+28,2,2,"Ray Lewis, Mary Wilson","Lamar Odom, Ray Lewis",1/2,1,2
+28,4,1,Lamar Odom,Lamar Odom,1/1,1,1
+28,6,1,Sailor Brinkley-Cook,Sean Spicer,0/1,0,1
+28,7,1,Karamo Brown,Sean Spicer,0/1,0,1
+28,8,1,Kate Flannery,Sean Spicer,0/1,0,1
+28,9,1,Sean Spicer,Sean Spicer,1/1,1,1
+28,10,1,James Van Der Beek,James Van Der Beek,1/1,1,1
+29,2,1,Charles Oakley,Charles Oakley,1/1,1,1
+29,3,1,Carole Baskin,Carole Baskin,1/1,1,1
+29,4,1,Anne Heche,Anne Heche,1/1,1,1
+29,5,1,Jesse Metcalfe,Jesse Metcalfe,1/1,1,1
+29,6,1,Veron Davis,Skai Jackson,0/1,0,1
+29,7,2,"Monica Aldama, Jeannie Mai","Monica Aldama, Kaitlyn Bristowe",1/2,1,2
+29,8,1,Chrishell Stause,Nelly,0/1,0,1
+29,9,1,AJ McLean,AJ McLean,1/1,1,1
+29,10,2,"Johnny Weir, Skai Jackson","Johnny Weir, Nelly",1/2,1,2
+30,2,1,Martin Kove,Martin Kove,1/1,1,1
+30,3,1,Christine Chiu,Brian Austin Green,0/1,0,1
+30,4,2,"Brian Austin Green, Matt James","Brian Austin Green, Kenya Moore",1/2,1,2
+30,5,1,Melanie C,Iman Shumpert,0/1,0,1
+30,6,1,Kenya Moore,Kenya Moore,1/1,1,1
+30,7,1,"Mike ""The Miz"" Mizanin","Mike ""The Miz"" Mizanin",1/1,1,1
+30,8,2,"Jimmie Allen, Olivia Jade","Jimmie Allen, Olivia Jade",2/2,2,2
+30,9,2,"Melora Hardin, Suni Lee","Melora Hardin, Cody Rigsby",1/2,1,2
+31,1,1,Jason Lewis,Jason Lewis,1/1,1,1
+31,2,1,Teresa Giudice,Cheryl Ladd,0/1,0,1
+31,3,1,Cheryl Ladd,Cheryl Ladd,1/1,1,1
+31,4,1,Sam Champion,Sam Champion,1/1,1,1
+31,5,2,"Joseph Baena, Selma Blair","Vinny Guadagnino, Daniel Durant",0/2,0,2
+31,6,1,Jessie James Decker,Vinny Guadagnino,0/1,0,1
+31,7,1,Jordin Sparks,Vinny Guadagnino,0/1,0,1
+31,8,2,"Vinny Guadagnino, Heidi D'Amelio","Vinny Guadagnino, Heidi D'Amelio",2/2,2,2
+31,9,2,"Trevor Donovan, Daniel Durant","Trevor Donovan, Daniel Durant",2/2,2,2
+32,1,1,Matt Walsh,Matt Walsh,1/1,1,1
+32,2,1,Jamie Lynn Spears,Mauricio Umansky,0/1,0,1
+32,3,1,Tyson Beckford,Tyson Beckford,1/1,1,1
+32,4,1,Adrian Peterson,Barry Williams,0/1,0,1
+32,5,1,Mira Sorvino,Harry Jowsey,0/1,0,1
+32,6,1,Mauricio Umansky,Harry Jowsey,0/1,0,1
+32,7,1,Lele Pons,Barry Williams,0/1,0,1
+32,8,1,Barry Williams,Harry Jowsey,0/1,0,1
+32,9,1,Harry Jowsey,Harry Jowsey,1/1,1,1
+33,2,2,"Anna Delvey, Tori Spelling","Eric Roberts, Reginald VelJohnson",0/2,0,2
+33,3,2,"Reginald VelJohnson, Eric Roberts","Reginald VelJohnson, Eric Roberts",2/2,2,2
+33,4,1,Brooks Nader,Dwight Howard,0/1,0,1
+33,5,1,Phaedra Parks,Phaedra Parks,1/1,1,1
+33,6,1,Jenn Tran,Ilona Maher,0/1,0,1
+33,7,1,Dwight Howard,Dwight Howard,1/1,1,1
+34,2,2,"Corey Feldman, Baron Davis","Corey Feldman, Baron Davis",2/2,2,2
+34,3,1,Lauren Jauregui,Lauren Jauregui,1/1,1,1
+34,4,1,Hilaria Baldwin,Andy Richter,0/1,0,1
+34,6,1,Scott Hoying,Scott Hoying,1/1,1,1
+34,7,1,Jen Affleck,Andy Richter,0/1,0,1
+34,8,1,Danielle Fishel,Andy Richter,0/1,0,1
+34,9,1,Andy Richter,Andy Richter,1/1,1,1
+34,10,1,Whitney Leavitt,Dylan Efron,0/1,0,1

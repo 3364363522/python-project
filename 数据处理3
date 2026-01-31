@@ -1,0 +1,41 @@
+import re
+import numpy as np
+import pandas as pd
+import tqdm
+
+# 1) 读取原始数据
+in_path = "/Users/garytchois/Desktop/vs/2026_MCM_Problem_C_Data_with_week_stats1.csv"
+df = pd.read_csv(in_path)
+
+# 2) 自动定位“每周评委评分均值”列：week1_judge_score_avg, week2_judge_score_avg, ...
+avg_cols = [c for c in df.columns if re.fullmatch(r"week\d+_judge_score_avg", c)]
+print("Found avg columns:", avg_cols)
+
+# 3) 把淘汰后的 0 当作缺失值处理（只处理均值列；不影响其他列）
+df_clean = df.copy()
+df_clean[avg_cols] = df_clean[avg_cols].replace(0, np.nan)
+
+# 4) 导出：宽表（每周一列）——适合你直接在 SPSSPro 做描述统计
+out_path = "2026_MCM_Problem_C_Data_with_week_stats1_clean_avg0_as_missing.csv"
+df_clean.to_csv(out_path, index=False)
+print("Saved cleaned wide CSV to:", out_path)
+
+# 5) 可选：导出长表（每行=某选手某周一个均值）——适合做“按week分组”的描述统计/图
+id_cols = [c for c in [
+    "celebrity_name", "ballroom_partner", "celebrity_industry",
+    "celebrity_homestate", "celebrity_homecountry/region",
+    "celebrity_age_during_season", "season", "results", "placement"
+] if c in df_clean.columns]
+
+long_df = df_clean.melt(
+    id_vars=id_cols,
+    value_vars=avg_cols,
+    var_name="week",
+    value_name="judge_score_avg"
+)
+long_df["week"] = long_df["week"].str.extract(r"week(\d+)_judge_score_avg").astype(int)
+long_df = long_df.sort_values(["season", "celebrity_name", "week"])
+
+out_long_path = "2026_MCM_Problem_C_weekly_judge_score_avg_long_missing0.csv"
+long_df.to_csv(out_long_path, index=False)
+print("Saved long CSV to:", out_long_path)
