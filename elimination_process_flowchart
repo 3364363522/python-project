@@ -1,0 +1,56 @@
+// New Elimination Mechanism Flowchart
+digraph New_Elimination_Mechanism {
+	dpi=300 rankdir=TB size="10,12"
+	node [fillcolor=white fontname=Helvetica shape=rect style="rounded,filled"]
+	edge [fontname=Helvetica fontsize=10]
+	Start [label="Week w Starts" fillcolor="#E0E0E0" shape=oval]
+	Input [label="Inputs:
+Raw Judge Scores (J) 
+Raw Fan Votes (F)" fillcolor="#FFFACD" shape=parallelogram]
+	Norm_J [label="Normalize Judge Scores
+Standardization" fillcolor="#E6F3FF"]
+	Trans_F [label="Transform Fan Votes
+Concave Function: g(f) = (f+ε)^γ" fillcolor="#E6F3FF"]
+	Dyn_Weight [label="Calculate Dynamic Weight α_w
+(Time-dependent)" fillcolor="#E6F3FF"]
+	Calc_S [label="Calculate Safety Score (S_iw)
+S = α * J_norm + (1-α) * g(f)" fillcolor="#D1E8E2" penwidth=2 style=filled]
+	Rank [label="Rank Contestants by S_iw"]
+	Identify_B3 [label="Identify Bottom-3 Set (B_w)
+Lowest 3 S_iw scores" fillcolor="#FFE4E1" shape=hexagon]
+	Fan_Save [label="Step 1: Fan Save
+Select i* in B_w with Max Fan Score g(f)" fillcolor="#FFD700"]
+	Safe_1 [label="Contestant i* is Safe" fillcolor="#90EE90" shape=oval]
+	Remain_2 [label="Remaining 2 Contestants
+(Risk Set)" shape=rect]
+	Check_Save [label="Decision:
+Do Judges have Save Opportunity
+AND choose to use it?" fillcolor="#FFB6C1" shape=diamond]
+	Judge_Vote [label="Judges Vote to Save One" fillcolor="#FFD700"]
+	Use_Token [label="Decrement Save Token Count" shape=rect style=dashed]
+	Elim_Other [label="Eliminate the Non-Saved Contestant" fillcolor="#FF6347" fontcolor=white shape=rect]
+	Elim_Low_S [label="Eliminate Contestant
+with lower Safety Score S_iw" fillcolor="#FF6347" fontcolor=white shape=rect]
+	Next_Week [label="Update Roster
+Proceed to Week w+1" fillcolor="#E0E0E0" shape=oval]
+	Start -> Input
+	Input -> Norm_J
+	Input -> Trans_F
+	Input -> Dyn_Weight
+	Norm_J -> Calc_S
+	Trans_F -> Calc_S
+	Dyn_Weight -> Calc_S
+	Calc_S -> Rank
+	Rank -> Identify_B3
+	Identify_B3 -> Fan_Save [label="Intervention Start"]
+	Fan_Save -> Safe_1
+	Fan_Save -> Remain_2
+	Safe_1 -> Next_Week [style=dashed]
+	Remain_2 -> Check_Save
+	Check_Save -> Judge_Vote [label=Yes]
+	Judge_Vote -> Use_Token
+	Judge_Vote -> Elim_Other
+	Elim_Other -> Next_Week
+	Check_Save -> Elim_Low_S [label="No (Default)"]
+	Elim_Low_S -> Next_Week
+}
