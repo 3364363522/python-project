@@ -12,12 +12,16 @@
 #       posterior_popularity_summary.csv
 #       posterior_vote_share_summary.csv
 #       weekly_elimination_check.csv
+#       method_comparison_weekly.csv          <-- (NEW) Q2: rank vs percent comparison + bias + disagreement
 #       mcmc_diagnostics.json
 #
 # Notes:
 # - This infers vote *shares* p_{s,w,i}. To get "fan votes", we also output a scaled vote estimate:
 #       votes_est = p_mean * TOTAL_FAN_VOTES_PER_WEEK
 #   You can change TOTAL_FAN_VOTES_PER_WEEK to any convenient scale (e.g., 10_000_000).
+# - For Q2 analysis, we DO NOT sample from CI independently. We use the posterior draws directly:
+#   each saved MCMC draw produces one p-vector per (season, week); we compute both methods and
+#   build distributions of correlations and disagreement probabilities across draws.
 # ------------------------------------------------------------
 
 import os
@@ -27,7 +31,7 @@ import math
 import itertools
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional
-from collections import defaultdict
+from collections import defaultdict, Counter
 from pathlib import Path
 
 import numpy as np
@@ -113,13 +117,16 @@ def ensure_week_judge_score_sum(df: pd.DataFrame, weeks: List[int]) -> pd.DataFr
             continue
 
         # Collect judge columns for this week
-        week_cols = [c for c in df.columns if _WEEK_JUDGE_RE.fullmatch(c) and int(_WEEK_JUDGE_RE.fullmatch(c).group(1)) == w]
+        week_cols = []
+        for c in df.columns:
+            m = _WEEK_JUDGE_RE.fullmatch(c)
+            if m and int(m.group(1)) == w:
+                week_cols.append(c)
+
         if not week_cols:
-            # Nothing to compute; skip
             continue
 
         numeric = df[week_cols].apply(_safe_to_numeric)
-        # If all NaN across judge cols -> NaN, else sum of non-NaN
         all_nan = numeric.isna().all(axis=1)
         s = numeric.sum(axis=1, skipna=True)
         s[all_nan] = np.nan
@@ -189,7 +196,7 @@ def infer_withdrew_week(
 class WeekEvent:
     season: int
     week: int
-    rule: str                 # "percent" or "rank"
+    rule: str                 # "percent" or "rank" (the show rule used for likelihood)
     mechanism: str            # "direct" or "bottom2_judgesave"
     active_ids: List[int]
     J: np.ndarray             # judge_total for active_ids
@@ -247,10 +254,8 @@ def build_events(df: pd.DataFrame, judge_long: pd.DataFrame, weeks: List[int]) -
             eliminated = elim_map.get((s, w), [])
             rule = season_rule(int(s))
 
-            # Mechanism switch
             mechanism = "bottom2_judgesave" if int(s) >= SEASON_JUDGESAVE_START else "direct"
 
-            # Mark withdrew week: skip likelihood for that week (data doesn't encode a "rule elimination")
             skip = False
             note = ""
             for (ss, cid), ww in withdrew_week.items():
@@ -296,6 +301,7 @@ def rank_desc(values: np.ndarray) -> np.ndarray:
     1 = best, n = worst, sorting by values descending.
     Ties get average rank (simple deterministic tie handling).
     """
+    values = np.asarray(values, dtype=float)
     order = np.argsort(-values)
     ranks = np.empty(len(values), dtype=float)
     ranks[order] = np.arange(1, len(values) + 1, dtype=float)
@@ -308,6 +314,47 @@ def rank_desc(values: np.ndarray) -> np.ndarray:
             avg = float(np.mean(ranks[idxs]))
             ranks[idxs] = avg
     return ranks
+
+
+def rank_asc(values: np.ndarray) -> np.ndarray:
+    """
+    1 = best, n = worst, sorting by values ascending.
+    Ties get average rank.
+    """
+    values = np.asarray(values, dtype=float)
+    order = np.argsort(values)
+    ranks = np.empty(len(values), dtype=float)
+    ranks[order] = np.arange(1, len(values) + 1, dtype=float)
+
+    uniq = {}
+    for i, v in enumerate(values):
+        uniq.setdefault(v, []).append(i)
+    for v, idxs in uniq.items():
+        if len(idxs) > 1:
+            avg = float(np.mean(ranks[idxs]))
+            ranks[idxs] = avg
+    return ranks
+
+
+def pearson_corr(x: np.ndarray, y: np.ndarray) -> float:
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    m = (~np.isnan(x)) & (~np.isnan(y))
+    if int(np.sum(m)) < 2:
+        return float("nan")
+    x = x[m]
+    y = y[m]
+    x = x - float(np.mean(x))
+    y = y - float(np.mean(y))
+    denom = float(np.sqrt(np.sum(x * x) * np.sum(y * y)))
+    if denom <= 1e-12:
+        return float("nan")
+    return float(np.sum(x * y) / denom)
+
+
+def spearman_corr_from_ranks(rx: np.ndarray, ry: np.ndarray) -> float:
+    # Spearman rho = Pearson corr of ranks
+    return pearson_corr(rx, ry)
 
 
 # ---------------- 6) model core: vote share & hazards ----------------
@@ -327,13 +374,84 @@ def hazard_rank(J: np.ndarray, p: np.ndarray) -> np.ndarray:
     return 0.5 * (rj + rp)  # larger rank -> more dangerous
 
 
+# ---------------- 6.5) Q2: compare rank-method vs percent-method (independent of show rule) ----------------
+def compare_two_methods_for_week(ev: WeekEvent, p: np.ndarray) -> Dict[str, float]:
+    """
+    For this (season, week) and this posterior draw p-vector, compute:
+    - rank-method combined ranking (judge_rank + fan_rank)
+    - percent-method combined ranking (judge_percent + fan_percent)
+    - judge-only ranking (judge_rank)
+    - fan-only ranking (fan_rank)
+    Then compute correlations:
+      r_rank_percent: corr(rank_method_rank, percent_method_rank)
+      r_rank_judge   : corr(rank_method_rank, judge_rank)
+      r_percent_judge: corr(percent_method_rank, judge_rank)
+      r_rank_fan     : corr(rank_method_rank, fan_rank)
+      r_percent_fan  : corr(percent_method_rank, fan_rank)
+      bias_rank      : r_rank_fan - r_rank_judge
+      bias_percent   : r_percent_fan - r_percent_judge
+    Plus IDs:
+      elim_rank_id, elim_percent_id (worst under each)
+      top1_rank_id, top1_percent_id (best under each)
+    """
+    J = np.asarray(ev.J, dtype=float)
+    p = np.asarray(p, dtype=float)
+
+    judge_rank = rank_desc(J)      # 1 best
+    fan_rank = rank_desc(p)        # 1 best
+
+    # Method A: "Rank method" (sum of ranks; smaller sum is better)
+    sum_rank = judge_rank + fan_rank
+    rank_method_rank = rank_asc(sum_rank)  # 1 best, n worst
+
+    # Method B: "Percent method" (sum of percentages; larger is better)
+    percent_score = np.asarray(ev.j_percent, dtype=float) + p
+    percent_method_rank = rank_desc(percent_score)  # 1 best, n worst
+
+    # Correlations on rank vectors (both are 1=best)
+    r_rank_percent = spearman_corr_from_ranks(rank_method_rank, percent_method_rank)
+    r_rank_judge = spearman_corr_from_ranks(rank_method_rank, judge_rank)
+    r_percent_judge = spearman_corr_from_ranks(percent_method_rank, judge_rank)
+    r_rank_fan = spearman_corr_from_ranks(rank_method_rank, fan_rank)
+    r_percent_fan = spearman_corr_from_ranks(percent_method_rank, fan_rank)
+
+    bias_rank = r_rank_fan - r_rank_judge if (not np.isnan(r_rank_fan) and not np.isnan(r_rank_judge)) else float("nan")
+    bias_percent = r_percent_fan - r_percent_judge if (not np.isnan(r_percent_fan) and not np.isnan(r_percent_judge)) else float("nan")
+
+    # Elimination under each method = worst (largest rank number)
+    elim_rank_pos = int(np.argmax(rank_method_rank))
+    elim_percent_pos = int(np.argmax(percent_method_rank))
+
+    top1_rank_pos = int(np.argmin(rank_method_rank))
+    top1_percent_pos = int(np.argmin(percent_method_rank))
+
+    elim_rank_id = int(ev.active_ids[elim_rank_pos])
+    elim_percent_id = int(ev.active_ids[elim_percent_pos])
+
+    top1_rank_id = int(ev.active_ids[top1_rank_pos])
+    top1_percent_id = int(ev.active_ids[top1_percent_pos])
+
+    return {
+        "r_rank_percent": float(r_rank_percent),
+        "r_rank_judge": float(r_rank_judge),
+        "r_percent_judge": float(r_percent_judge),
+        "r_rank_fan": float(r_rank_fan),
+        "r_percent_fan": float(r_percent_fan),
+        "bias_rank": float(bias_rank),
+        "bias_percent": float(bias_percent),
+        "elim_rank_id": float(elim_rank_id),         # store as float for easy np.array; cast later
+        "elim_percent_id": float(elim_percent_id),
+        "top1_rank_id": float(top1_rank_id),
+        "top1_percent_id": float(top1_percent_id),
+    }
+
+
 # ---------------- 7) likelihoods ----------------
 def _hazard_for_event_subset(ev: WeekEvent, mu_s: np.ndarray, gamma: float, remaining_ids: List[int], w_percent: float) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Build hazard on subset "remaining_ids".
     Returns: (hazard, p_sub, J_sub)
     """
-    # Map from contestant_id -> position in ev.active_ids arrays
     active_pos = {cid: i for i, cid in enumerate(ev.active_ids)}
     sub_idx = np.array([active_pos[cid] for cid in remaining_ids], dtype=int)
 
@@ -405,9 +523,6 @@ def bottom2_judgesave_loglik_ordered(
     if not elim_order:
         return 0.0
 
-    # In this mechanism, the show is rank-based in practice around S28+,
-    # but we keep ev.rule general; hazard function handles it.
-
     remaining = list(ev.active_ids)
     ll = 0.0
 
@@ -417,53 +532,39 @@ def bottom2_judgesave_loglik_ordered(
         if len(remaining) < 2:
             return -np.inf
 
-        # Compute hazard for remaining
         hz, _, J_sub = _hazard_for_event_subset(ev, mu_s, gamma, remaining, w_percent=w_percent)
 
-        # Precompute first-pick log probs
         log_q1 = log_softmax(kappa_fuzzy * hz)
-
-        # We'll marginalize: sum over other member b != e, and two possible orders.
-        # Need a map from remaining_id -> position in current subset
         pos = {cid: i for i, cid in enumerate(remaining)}
 
         epos = pos[e_id]
         terms = []
 
-        # judge decision: for a pair (a,b), P(elim=a) = softmax(kappa_judge * (-J))[a]
         def logp_judge_elim_a(a_idx: int, b_idx: int) -> float:
             logits = kappa_judge * np.array([-J_sub[a_idx], -J_sub[b_idx]], dtype=float)
             lsm = log_softmax(logits)
-            return float(lsm[0])  # corresponds to "a" being first in (a,b)
+            return float(lsm[0])
 
-        # Iterate other candidate b
         for b_id in remaining:
             if b_id == e_id:
                 continue
             bpos = pos[b_id]
 
-            # --- Order 1: (e first, b second) ---
-            # Remove e, compute second-pick log probs on remaining\{e}
+            # Order 1: (e first, b second)
             rem2_1 = [cid for cid in remaining if cid != e_id]
-            # positions in hz_without_e:
             hz2_1 = np.array([hz[pos[cid]] for cid in rem2_1], dtype=float)
             log_q2_1 = log_softmax(kappa_fuzzy * hz2_1)
             bpos2_1 = rem2_1.index(b_id)
 
-            # judge elimination prob given pair {e,b}; represent as ordered (e,b)
             log_j_eb = logp_judge_elim_a(epos, bpos)
-
             terms.append(float(log_q1[epos] + log_q2_1[bpos2_1] + log_j_eb))
 
-            # --- Order 2: (b first, e second) ---
+            # Order 2: (b first, e second)
             rem2_2 = [cid for cid in remaining if cid != b_id]
             hz2_2 = np.array([hz[pos[cid]] for cid in rem2_2], dtype=float)
             log_q2_2 = log_softmax(kappa_fuzzy * hz2_2)
             epos2_2 = rem2_2.index(e_id)
 
-            # judge elimination prob given pair {b,e}; represent as ordered (e,b) for same judge calc
-            # Pair is still (e,b) for judge probability of eliminating e:
-            # logits use indices (e,b) => same log_j_eb
             terms.append(float(log_q1[bpos] + log_q2_2[epos2_2] + log_j_eb))
 
         ll += logsumexp(np.array(terms, dtype=float))
@@ -495,12 +596,9 @@ def elimination_loglik_event(
     elim_ids = list(ev.eliminated_ids)
     m = len(elim_ids)
 
-    # If multiple eliminations, marginalize over possible orders (up to max_perm permutations)
-    # P(set) = sum_{orders} P(order)
     if m > 1:
         perms = list(itertools.permutations(elim_ids))
         if len(perms) > max_perm:
-            # Too many permutations; fall back to given order (rare in this dataset)
             perms = [tuple(elim_ids)]
     else:
         perms = [tuple(elim_ids)]
@@ -550,7 +648,6 @@ def log_prior(
     n_mu = mu_all.size
 
     lp = 0.0
-    # Proper-ish Normal prior contribution depends on sigma_mu
     lp += -0.5 * float(np.sum((mu_all / sigma_mu) ** 2)) - n_mu * math.log(sigma_mu + 1e-300)
 
     lp += log_normal(gamma, 0.0, 1.5)
@@ -598,6 +695,10 @@ def log_posterior(
 
 # ---------------- 9) MCMC ----------------
 def summarize_array(a: np.ndarray) -> Dict[str, float]:
+    a = np.asarray(a, dtype=float)
+    a = a[~np.isnan(a)]
+    if a.size == 0:
+        return {"mean": float("nan"), "median": float("nan"), "q025": float("nan"), "q975": float("nan")}
     return {
         "mean": float(np.mean(a)),
         "median": float(np.median(a)),
@@ -824,30 +925,25 @@ def weekly_elim_probs(ev: WeekEvent, mu_s: np.ndarray, gamma: float, kappa_stric
     if n < 2:
         return np.full(n, np.nan, dtype=float)
 
-    # First draw probs
     log_q1 = log_softmax(kappa_fuzzy * hz)
     q1 = np.exp(log_q1)
 
     out = np.zeros(n, dtype=float)
 
-    # For each possible first pick a
     for a in range(n):
-        # second draw on remaining without a
         rem_idx = [j for j in range(n) if j != a]
         hz2 = hz[rem_idx]
         q2 = np.exp(log_softmax(kappa_fuzzy * hz2))
 
         for t, b in enumerate(rem_idx):
-            p_bottom2_order = q1[a] * q2[t]  # order (a,b)
+            p_bottom2_order = q1[a] * q2[t]
 
-            # judge elimination prob for both members, based on -J
             logits_j = kappa_judge * np.array([-J_sub[a], -J_sub[b]], dtype=float)
-            pj = np.exp(log_softmax(logits_j))  # pj[0]=P(elim a), pj[1]=P(elim b)
+            pj = np.exp(log_softmax(logits_j))
 
             out[a] += p_bottom2_order * pj[0]
             out[b] += p_bottom2_order * pj[1]
 
-    # normalize (numerical)
     s = float(out.sum())
     if s <= 0:
         return np.full(n, 1.0 / n, dtype=float)
@@ -904,18 +1000,54 @@ def export_all(df: pd.DataFrame, judge_long: pd.DataFrame, events: List[WeekEven
     mu_df["mu_rank"] = mu_df.groupby("season")["mu_mean"].rank(ascending=False, method="min").astype(int)
     mu_df.to_csv(outdir / "posterior_popularity_summary.csv", index=False)
 
-    # Vote share summary
+    # Vote share summary + Q2 method comparison stores
     p_store = defaultdict(list)
+
+    # Q2: per-(season,week) metric draws
+    q2_store = defaultdict(lambda: defaultdict(list))  # key -> metric_name -> list
+    q2_elim_rank = defaultdict(list)
+    q2_elim_percent = defaultdict(list)
+    q2_top1_rank = defaultdict(list)
+    q2_top1_percent = defaultdict(list)
+
+    # For easier metadata in output
+    ev_by_key = {(ev.season, ev.week): ev for ev in events}
+
     for d in range(len(draws["gamma"])):
         gamma = float(draws["gamma"][d])
         mu_by_season = draws["mu_by_season"][d]
+
         for ev in events:
             mu_s = mu_by_season[ev.season]
             active = np.array(ev.active_ids, dtype=int)
             mu_vec = mu_s[active]
             p = vote_share(mu_vec, ev.zJ, gamma)
+
+            # store p for Q1 summaries
             for cid, pi in zip(ev.active_ids, p):
                 p_store[(ev.season, ev.week, int(cid))].append(float(pi))
+
+            # Q2 metrics (skip withdrew weeks to avoid mixing with non-rule weeks)
+            if ev.skip_likelihood:
+                continue
+
+            m = compare_two_methods_for_week(ev, p)
+            key = (ev.season, ev.week)
+
+            # correlations & bias
+            for name in ["r_rank_percent", "r_rank_judge", "r_percent_judge", "r_rank_fan", "r_percent_fan", "bias_rank", "bias_percent"]:
+                q2_store[key][name].append(float(m[name]))
+
+            # elimination/top1 ids
+            er = int(m["elim_rank_id"])
+            ep = int(m["elim_percent_id"])
+            tr = int(m["top1_rank_id"])
+            tp = int(m["top1_percent_id"])
+
+            q2_elim_rank[key].append(er)
+            q2_elim_percent[key].append(ep)
+            q2_top1_rank[key].append(tr)
+            q2_top1_percent[key].append(tp)
 
     vote_rows = []
     for (s, w, cid), vals in p_store.items():
@@ -948,7 +1080,7 @@ def export_all(df: pd.DataFrame, judge_long: pd.DataFrame, events: List[WeekEven
 
     pd.DataFrame(vote_rows).to_csv(outdir / "posterior_vote_share_summary.csv", index=False)
 
-    # Weekly elimination check
+    # Weekly elimination check (your existing PPC)
     week_prob_draws = defaultdict(list)
     for d in range(len(draws["gamma"])):
         gamma = float(draws["gamma"][d])
@@ -1016,6 +1148,94 @@ def export_all(df: pd.DataFrame, judge_long: pd.DataFrame, events: List[WeekEven
 
     pd.DataFrame(check_rows).to_csv(outdir / "weekly_elimination_check.csv", index=False)
 
+    # ---------------- Q2: method comparison weekly summary (NEW) ----------------
+    q2_rows = []
+    for key in sorted(q2_store.keys()):
+        s, w = key
+        ev = ev_by_key.get(key, None)
+        if ev is None:
+            continue
+
+        row = {
+            "season": int(s),
+            "week": int(w),
+            "n_active": int(len(ev.active_ids)),
+            "mechanism": ev.mechanism,
+            "rule_used_in_likelihood": ev.rule,
+            "notes": ev.note,
+        }
+
+        # summarize correlations/bias distributions
+        for metric in ["r_rank_percent", "r_rank_judge", "r_percent_judge", "r_rank_fan", "r_percent_fan", "bias_rank", "bias_percent"]:
+            arr = np.array(q2_store[key][metric], dtype=float)
+            st = summarize_array(arr)
+            row[f"{metric}_mean"] = st["mean"]
+            row[f"{metric}_median"] = st["median"]
+            row[f"{metric}_q025"] = st["q025"]
+            row[f"{metric}_q975"] = st["q975"]
+
+        # elimination disagreement probability (your requested "淘汰分歧率")
+        er = np.array(q2_elim_rank[key], dtype=int)
+        ep = np.array(q2_elim_percent[key], dtype=int)
+        if er.size > 0 and ep.size == er.size:
+            row["elim_disagree_prob"] = float(np.mean(er != ep))
+        else:
+            row["elim_disagree_prob"] = float("nan")
+
+        # optional: top1 disagreement probability (rank-1 winner differs)
+        tr = np.array(q2_top1_rank[key], dtype=int)
+        tp = np.array(q2_top1_percent[key], dtype=int)
+        if tr.size > 0 and tp.size == tr.size:
+            row["top1_disagree_prob"] = float(np.mean(tr != tp))
+        else:
+            row["top1_disagree_prob"] = float("nan")
+
+        # most frequent eliminated under each method (helps interpretation)
+        if er.size > 0:
+            c_er = Counter(er.tolist())
+            cid, cnt = c_er.most_common(1)[0]
+            row["most_likely_elim_rank_id"] = int(cid)
+            row["most_likely_elim_rank_name"] = name_map.get((s, int(cid)), "")
+            row["most_likely_elim_rank_prob"] = float(cnt / er.size)
+        else:
+            row["most_likely_elim_rank_id"] = np.nan
+            row["most_likely_elim_rank_name"] = ""
+            row["most_likely_elim_rank_prob"] = np.nan
+
+        if ep.size > 0:
+            c_ep = Counter(ep.tolist())
+            cid, cnt = c_ep.most_common(1)[0]
+            row["most_likely_elim_percent_id"] = int(cid)
+            row["most_likely_elim_percent_name"] = name_map.get((s, int(cid)), "")
+            row["most_likely_elim_percent_prob"] = float(cnt / ep.size)
+        else:
+            row["most_likely_elim_percent_id"] = np.nan
+            row["most_likely_elim_percent_name"] = ""
+            row["most_likely_elim_percent_prob"] = np.nan
+
+        # probability each method matches the observed eliminated (if available)
+        if len(ev.eliminated_ids) >= 1:
+            obs = int(ev.eliminated_ids[0])
+            row["observed_eliminated_id"] = obs
+            row["observed_eliminated_name"] = name_map.get((s, obs), "")
+            if er.size > 0:
+                row["prob_rank_method_matches_observed_elim"] = float(np.mean(er == obs))
+            else:
+                row["prob_rank_method_matches_observed_elim"] = np.nan
+            if ep.size > 0:
+                row["prob_percent_method_matches_observed_elim"] = float(np.mean(ep == obs))
+            else:
+                row["prob_percent_method_matches_observed_elim"] = np.nan
+        else:
+            row["observed_eliminated_id"] = np.nan
+            row["observed_eliminated_name"] = ""
+            row["prob_rank_method_matches_observed_elim"] = np.nan
+            row["prob_percent_method_matches_observed_elim"] = np.nan
+
+        q2_rows.append(row)
+
+    pd.DataFrame(q2_rows).to_csv(outdir / "method_comparison_weekly.csv", index=False)
+
     # Diagnostics
     diag = {
         "w_percent": w_percent,
@@ -1028,6 +1248,14 @@ def export_all(df: pd.DataFrame, judge_long: pd.DataFrame, events: List[WeekEven
         "sigma_mu_summary": summarize_array(sigma_mu_arr),
         "TOTAL_FAN_VOTES_PER_WEEK": TOTAL_FAN_VOTES_PER_WEEK,
         "SEASON_JUDGESAVE_START": SEASON_JUDGESAVE_START,
+        "q2_outputs": {
+            "method_comparison_weekly_csv": str(outdir / "method_comparison_weekly.csv"),
+            "q2_metrics": [
+                "r_rank_percent", "r_rank_judge", "r_percent_judge",
+                "r_rank_fan", "r_percent_fan", "bias_rank", "bias_percent",
+                "elim_disagree_prob", "top1_disagree_prob"
+            ],
+        },
     }
     with open(outdir / "mcmc_diagnostics.json", "w", encoding="utf-8") as f:
         json.dump(diag, f, ensure_ascii=False, indent=2)
@@ -1094,4 +1322,4 @@ def main(
 if __name__ == "__main__":
     # Example: only run w=0.5 with moderately long chain.
     # Increase n_iter/burn for more stable posterior intervals.
-    main(w_list=(0.5,), n_iter=12000, burn=3000, thin=8, seed=0)
+    main(w_list=(0.5,), n_iter=5000, burn=1500, thin=10, seed=0)
